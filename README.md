@@ -1,4 +1,7 @@
-# Term Project
+# Scheduler Game
+
 CSC 668 Spring 2019
-Scheduler Game
+
+Term Project
+
 Team 2

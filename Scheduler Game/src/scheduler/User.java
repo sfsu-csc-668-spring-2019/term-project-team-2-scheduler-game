@@ -1,4 +1,4 @@
-package main;
+package scheduler;
 
 import city.City;
 import calendar.Calendar;

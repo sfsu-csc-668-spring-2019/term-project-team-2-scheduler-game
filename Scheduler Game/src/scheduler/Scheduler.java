@@ -1,4 +1,4 @@
-package main;
+package scheduler;
 
 import javax.swing.*;
 
@@ -39,4 +39,16 @@ public class Scheduler {
     public void start(){
         this.status = 1;
     }
+
+
+
+
+
+
+    public static void main(String[] args) {
+
+        System.out.println("Hello World!");
+
+    }
+
 }

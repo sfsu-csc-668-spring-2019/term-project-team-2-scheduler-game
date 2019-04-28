@@ -1,8 +1,8 @@
 package calendar;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Project {
 
@@ -11,7 +11,8 @@ public class Project {
     private String description;
     private ArrayList<String> tags;
     private Duration duration;
-    private Date deadline;
+    private LocalDateTime deadline;
+    private ArrayList<Task> tasks;
 
     public Project(){
 
@@ -57,11 +58,19 @@ public class Project {
         this.duration = duration;
     }
 
-    public Date getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(LocalDateTime deadline) {
         this.deadline = deadline;
+    }
+
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
     }
 }

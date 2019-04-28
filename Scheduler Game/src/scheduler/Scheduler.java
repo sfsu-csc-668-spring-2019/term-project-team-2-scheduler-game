@@ -1,6 +1,15 @@
 package scheduler;
 
+import calendar.Project;
+import calendar.Task;
+
 import javax.swing.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Scheduler {
 
@@ -18,6 +27,7 @@ public class Scheduler {
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
         this.user = this.loadUser();
+        this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
     }
 
     private User loadUser(){
@@ -30,6 +40,14 @@ public class Scheduler {
         while(this.status == 1){
             System.out.println("It's run!");
         }
+    }
+
+    /**
+     * Executed when a task is updated
+     * @param task
+     */
+    public void taskUpdate(Task task) {
+
     }
 
     public void stop(){
@@ -48,6 +66,15 @@ public class Scheduler {
     public static void main(String[] args) {
 
         System.out.println("Hello World!");
+
+        Scheduler s = new Scheduler();
+
+        Project project = s.user.getCalendar().getProjectBuilder().build("Project1",
+                                                                        "description of the project",
+                                                                        new ArrayList<String>(),
+                                                                        Duration.ofHours(2),
+                                                                        LocalDateTime.of(2014, Month.JANUARY, 1, 10, 10, 30));
+        s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
 
     }
 

@@ -47,11 +47,52 @@ public class Task {
         this.observer.taskUpdate(this);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getBegin() {
+        return begin;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public HashMap<String, Boolean> getTodoList() {
+        return todoList;
+    }
+
+    public float getProductivity() {
+        return productivity;
+    }
+
+    public float getSatisfaction() {
+        return satisfaction;
+    }
+
+    public Scheduler getObserver() {
+        return observer;
+    }
+
+
     public String toString(){
         String str = "";
         str += "id: " + this.id + "\n";
         str += "Begin: " + this.begin + "\tEnd: " + this.end +  "\tDuration: " + this.duration + "\n";
-        str += "Status: " + this.status + "\n";
+        str += "Status: " + this.status ;
         return str;
     }
 }

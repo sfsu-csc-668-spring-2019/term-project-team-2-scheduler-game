@@ -73,7 +73,7 @@ public class Scheduler {
                                                                         "description of the project",
                                                                         new ArrayList<String>(),
                                                                         Duration.ofHours(2),
-                                                                        LocalDateTime.of(2014, Month.JANUARY, 1, 10, 10, 30));
+                                                                        LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
         s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
 
     }

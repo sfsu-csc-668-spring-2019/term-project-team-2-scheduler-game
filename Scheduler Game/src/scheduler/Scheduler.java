@@ -47,7 +47,8 @@ public class Scheduler {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello World!");
+        System.out.println("Schedueler is running...");
+        new Login();
 
     }
 

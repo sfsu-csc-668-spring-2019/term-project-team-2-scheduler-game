@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5d75757a-97af-4a06-9c3a-fc3409a8d733" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Scheduler Game/src/gui/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler Game/src/gui/MainGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler Game/src/gui/MainGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scheduler Game/src/scheduler/Scheduler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Scheduler Game/src/scheduler/Scheduler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +139,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2536349" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

@@ -1,12 +1,12 @@
 package city;
 
 public class Money {
-    int amt;
-    int income;
+    float amt;
+    float income;
 
-    public Money (int amt){
+    public Money (float amt){
         this.amt = amt;
-        income = 10;
+        income = 10f;
     }
 
     public void gainIncome(){

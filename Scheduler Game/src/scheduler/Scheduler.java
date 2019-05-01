@@ -45,8 +45,8 @@ public class Scheduler {
       //TODO: Check if this portion of code is still necessary
         this.user = this.loadUser(username, password);
 
-        this.user = this.loadUser();
-        this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
+        //this.user = this.loadUser();
+        //this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
 
     }
 
@@ -71,7 +71,7 @@ public class Scheduler {
             return null;
         }
 
-        //return new User("user1", "qwerty");
+        return new User("user1", "qwerty");
         //return new User(username, password);
 
     }
@@ -123,7 +123,10 @@ public class Scheduler {
         */
         scheduler.run();
 
-        System.out.println("Schedueler is running...");
+
+
+        /*System.out.println("Schedueler is running...");
+
         new Login();
 
         Scheduler s = new Scheduler();
@@ -134,6 +137,7 @@ public class Scheduler {
                                                                         Duration.ofHours(2),
                                                                         LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
         s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
+        */
     }
 
 }

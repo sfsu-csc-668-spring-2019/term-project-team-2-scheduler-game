@@ -9,7 +9,7 @@ public class City {
     private Money budget;
     private int exp;
     private int lvl;
-    private int expGoal; //TODO: Make a list of experience goals. 
+    private int expGoal; //TODO: Make a list of experience goals.
     private float expRate;
     private float eventChance;
     private EventManager eventManager;

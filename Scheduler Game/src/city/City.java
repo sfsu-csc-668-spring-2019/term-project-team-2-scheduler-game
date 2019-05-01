@@ -10,7 +10,8 @@ public class City {
     private int exp;
     private int lvl;
     private int expGoal; //TODO: Make a list of experience goals. Maybe need another class
-    private int expRate;
+    private float expRate;
+    private float eventChance;
     private EventManager eventManager;
 
 
@@ -21,8 +22,10 @@ public class City {
         exp = 0;
         lvl = 0;
         streak = 0;
-        expRate = 1;
+        expRate = 1f;
         expGoal = 100;
+        eventManager  = new EventManager();
+        eventChance = 1;
     }
 
     public void completeTask(){
@@ -55,6 +58,10 @@ public class City {
             streak = 0;
         }
         streak--;
+    }
+
+    public void modifyEvents(float modifier){
+        eventChance = (eventChance * (1 + modifier));
     }
 
     public void Update(){

@@ -34,6 +34,12 @@ public class Scheduler {
         this.user = user;
     }
 
+    //check user against db or whatevers on the
+    public boolean checkUser(String userame){
+        return true;
+    }
+
+
     public Scheduler(String username, String password){
         this.status = 0;
 
@@ -41,9 +47,15 @@ public class Scheduler {
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
         
-      
+
+        boolean userExists = checkUser(username);
+
+        if(userExists){
+            this.user = this.loadUser(username, password);
+        }
+
       //TODO: Check if this portion of code is still necessary
-        this.user = this.loadUser(username, password);
+
 
         //this.user = this.loadUser();
         //this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);

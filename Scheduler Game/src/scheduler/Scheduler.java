@@ -34,8 +34,15 @@ public class Scheduler {
         this.user = user;
     }
 
+    public boolean hasUser(){
+        if(this.user == null){
+            return false;
+        }
+        return true;
+    }
+
     //check user against db or whatevers on the
-    public boolean checkUser(String userame){
+    public boolean checkUserInDB(String username){
         return true;
     }
 
@@ -48,15 +55,26 @@ public class Scheduler {
         this.uiManager = new UIManager();
         
 
-        boolean userExists = checkUser(username);
+        boolean userExists = checkUserInDB(username);
+
 
         if(userExists){
-            this.user = this.loadUser(username, password);
+
+            User tempUser = this.loadUser(username, password);
+            while(tempUser == null){
+                //TODO: have a way to give another password
+                String newPassword = "";
+                System.out.println("Password was incorrect. Try Again.");
+                tempUser = this.loadUser(username, newPassword);
+            }
+        }
+        else{
+            System.out.println("User does not exist upon scheduler startup.");
+            this.user = null;
         }
 
-      //TODO: Check if this portion of code is still necessary
 
-
+      //TODO: Check if this portion of code is still necessary. :should be okay to keep calendar call -Hasaan:
         //this.user = this.loadUser();
         //this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
 
@@ -65,8 +83,11 @@ public class Scheduler {
 
     // check if a user exist, if not, propose to create one
     //private User loadUser(String username, String password){
+
+    //TODO: Need this to be able to send back a null user if password is wrong
     private User loadUser(String username, String password){
 
+        /*
         //NEED A DB TO REFERENCE FOR THIS ONE
         if (username.equals("temp")){
             //return user;
@@ -81,7 +102,7 @@ public class Scheduler {
         else{
             System.out.println("No user " + username + " found. Create new user?");
             return null;
-        }
+        }*/
 
         return new User("user1", "qwerty");
         //return new User(username, password);
@@ -114,6 +135,13 @@ public class Scheduler {
     }
 
 
+    public static void userCheckInScheduler(Scheduler scheduler){
+        boolean userExists = scheduler.hasUser();
+        if(!userExists){
+            System.out.println("User DNE. Create new user?");
+        }
+    }
+
 
     public static void main(String[] args) {
 
@@ -124,19 +152,13 @@ public class Scheduler {
 
         Scheduler scheduler = new Scheduler(username, password);
 
-        /*
-        User checkUser = scheduler.loadUser(username, password);
-        if(checkUser == null){
-            //have some method to create new user
-            System.out.println("Create new user here.");
+        userCheckInScheduler(scheduler);
 
-            //scheduler.setUser();
-        }
-        */
         scheduler.run();
 
 
 
+        //TODO: Check if this is still fine after new changes to scheduler/user files
         /*System.out.println("Schedueler is running...");
 
         new Login();

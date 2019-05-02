@@ -5,17 +5,17 @@ import java.awt.*;
 
 // This class is the gui controller
 
-public class MainFrame extends JFrame {
+public class FrameMain extends JFrame {
 
-    private BodyPanel textArea;
-    private DashboardPanel dashboard;
+    private PanelBody textArea;
+    private PanelDashboard dashboard;
 
-    public MainFrame() {
+    public FrameMain() {
         super("Scheduler Game");
         this.setLayout(new BorderLayout());
 
-        dashboard = new DashboardPanel();
-        textArea = new BodyPanel();
+        dashboard = new PanelDashboard();
+        textArea = new PanelBody();
 
         Color dashboardBg = Color.decode("#262a33");
         dashboard.setBackground(dashboardBg);
@@ -27,11 +27,11 @@ public class MainFrame extends JFrame {
             }
         });
 
-        // Add components to MainFrame
-        add(dashboard, BorderLayout.WEST);
-        add(textArea, BorderLayout.EAST);
+        // Add components to FrameMain
+        this.add(dashboard, BorderLayout.WEST);
+        this.add(textArea, BorderLayout.EAST);
 
-        // Finish settings for MainFrame
+        // Finish settings for FrameMain
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setMinimumSize(new Dimension(900, 600));
         this.setSize(900, 600);

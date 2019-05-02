@@ -5,20 +5,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DashboardPanel extends JPanel implements ActionListener {
+public class PanelDashboard extends JPanel implements ActionListener {
 
     private CustomButton btnHome, btnCalendar, btnCity, btnLogout;
-    private DashboardLogo pLogo;
+    private CustomImage pLogo;
     private JPanel pMenu;
     private StringListener textListener;
 
-    public DashboardPanel() {
+    public PanelDashboard() {
         Dimension dim = new Dimension();
         dim.width = 200;
         setPreferredSize(dim);
 
         // Panels
-        pLogo = new DashboardLogo(new ImageIcon("src/images/logo-icon.png").getImage());
+        pLogo = new CustomImage(new ImageIcon("images/logo-icon.png").getImage());
         pMenu = new JPanel();
 
         this.setLayout(new GridLayout(4, 1));

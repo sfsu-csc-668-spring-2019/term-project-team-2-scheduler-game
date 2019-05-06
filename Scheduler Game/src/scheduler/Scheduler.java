@@ -36,8 +36,10 @@ public class Scheduler {
 
     public boolean hasUser(){
         if(this.user == null){
+            System.out.println("No user Exists");
             return false;
         }
+        System.out.println("User Exists");
         return true;
     }
 
@@ -60,12 +62,12 @@ public class Scheduler {
 
         if(userExists){
 
-            User tempUser = this.loadUser(username, password);
+            User tempUser = loadUser(username, password);
             while(tempUser == null){
                 //TODO: have a way to give another password
                 String newPassword = "";
                 System.out.println("Password was incorrect. Try Again.");
-                tempUser = this.loadUser(username, newPassword);
+                tempUser = loadUser(username, newPassword);
             }
         }
         else{
@@ -87,25 +89,26 @@ public class Scheduler {
     //TODO: Need this to be able to send back a null user if password is wrong
     private User loadUser(String username, String password){
 
-        /*
-        //NEED A DB TO REFERENCE FOR THIS ONE
-        if (username.equals("temp")){
-            //return user;
+        if(true) {
             User tempUser = new User(username, password);
-            boolean loginVal = tempUser.checkLogin(username, password);
-
-            if(loginVal){
-                return tempUser;
-            }
-
+            tempUser.checkLogin(username, password)
+            return tempUser;
         }
-        else{
-            System.out.println("No user " + username + " found. Create new user?");
+        else {
             return null;
-        }*/
+        }
 
-        return new User("user1", "qwerty");
-        //return new User(username, password);
+
+    }
+
+    private void newUser(String username, String password){
+
+        while(true){
+            this.user = new User(username, password);
+            //TODO: validate new created user before making new account
+            break;
+        }
+        //return new User("user1", "qwerty");
 
     }
 
@@ -135,11 +138,13 @@ public class Scheduler {
     }
 
 
-    public static void userCheckInScheduler(Scheduler scheduler){
+    public static boolean userCheckInScheduler(Scheduler scheduler){
         boolean userExists = scheduler.hasUser();
         if(!userExists){
             System.out.println("User DNE. Create new user?");
+            return false;
         }
+        return true;
     }
 
 
@@ -152,9 +157,15 @@ public class Scheduler {
 
         Scheduler scheduler = new Scheduler(username, password);
 
-        userCheckInScheduler(scheduler);
+        boolean userExists = userCheckInScheduler(scheduler);
 
-        scheduler.run();
+        while(true) {
+            if (!userExists) {
+                scheduler.newUser(username, password);
+            }
+
+        }
+        //scheduler.run();
 
 
 

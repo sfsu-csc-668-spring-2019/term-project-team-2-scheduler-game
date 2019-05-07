@@ -15,7 +15,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
     public PanelCalendar() {
 
         // Create the main panels that will have the main content
-        dashboardCalendar = new PanelDashboard("images/logo-icon.png", 4);
+        dashboardCalendar = new PanelDashboard("images/logo-calendar.png", 4);
         p1 = new JPanel();
         p2 = new JPanel();
         p4 = new JPanel();
@@ -24,7 +24,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
         btn1 = dashboardCalendar.newDashButton("One");
         btn2 = dashboardCalendar.newDashButton("Two");
         btn3 = dashboardCalendar.newDashButton("Three");
-        btn4 = dashboardCalendar.newDashButton("FOUR");
+        btn4 = dashboardCalendar.newDashButton("Four");
 
         // Add action listeners to all buttons
         btn1.addActionListener(this);

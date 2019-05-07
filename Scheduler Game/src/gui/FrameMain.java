@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public class FrameMain extends JFrame implements ActionListener {
 
     private PanelDashboard dashboardIcons;
+    private String iconHome, iconCalendar, iconCity, iconLogout;
     private CustomButton btnHome, btnCalendar, btnCity, btnLogout;
     private PanelHome pHome;
     private PanelCalendar pCalendar;
@@ -20,21 +21,27 @@ public class FrameMain extends JFrame implements ActionListener {
         this.setLayout(new BorderLayout());
 
         // Create the main panels that will have the main content
-        dashboardIcons = new PanelDashboard(4);
-        pHome = new PanelHome();
-        pCalendar = new PanelCalendar();
-        pCity = new PanelCity();
+        dashboardIcons = new PanelDashboard();
+        pHome          = new PanelHome();
+        pCalendar      = new PanelCalendar();
+        pCity          = new PanelCity();
 
         // Set dashboard style
         Color dashboardBg = Color.decode("#5D00A2");
         dashboardIcons.setBackground(dashboardBg);
 
+        // Set paths for all icons
+        iconHome     = "images/icon-home.png";
+        iconCalendar = "images/icon-calendar.png";
+        iconCity     = "images/icon-city.png";
+        iconLogout   = "images/icon-logout.png";
+
         // Create the dashboard button for each of the main panels
         Color btnHover = Color.decode("#262A34");
-        btnHome = dashboardIcons.newDashButton("Home", dashboardBg, btnHover);
-        btnCalendar = dashboardIcons.newDashButton("Calendar", dashboardBg, btnHover);
-        btnCity = dashboardIcons.newDashButton("City", dashboardBg, btnHover);
-        btnLogout = dashboardIcons.newDashButton("Logout", dashboardBg, btnHover);
+        btnHome     = dashboardIcons.newDashButton("Home\n", iconHome, dashboardBg, btnHover);
+        btnCalendar = dashboardIcons.newDashButton("Calendar", iconCalendar, dashboardBg, btnHover);
+        btnCity     = dashboardIcons.newDashButton("City", iconCity, dashboardBg, btnHover);
+        btnLogout   = dashboardIcons.newDashButton("Logout", iconLogout, dashboardBg, btnHover);
 
         // Add action listeners to all buttons
         btnHome.addActionListener(this);

@@ -10,15 +10,17 @@ public class PanelDashboard extends JPanel {
     private JPanel pMenu;
 
     // Used for the top level menu (with the icons)
-    public PanelDashboard(int numItems) {
+    public PanelDashboard() {
         Dimension dim = new Dimension();
         dim.width = 100;
-        setPreferredSize(dim);
 
         pMenu = new JPanel();
-        this.setLayout(new GridLayout(numItems, 1));
+        pMenu.setLayout(new GridLayout(6, 1));
+        pMenu.setBackground(Color.decode("#5D00A2"));
+
+        this.setPreferredSize(dim);
+        this.setLayout(new GridLayout(1, 1));
         this.add(pMenu);
-        pMenu.setLayout(new GridLayout(numItems, 1));
     }
 
     // Used for the lower level menu (for each panel)
@@ -41,8 +43,8 @@ public class PanelDashboard extends JPanel {
         return btn;
     }
 
-    public CustomButton newDashButton(String s, Color c1, Color c2) {
-        btn = new CustomButton(s, c1, c2);
+    public CustomButton newDashButton(String s, String iconPath, Color c1, Color c2) {
+        btn = new CustomButton(s, iconPath, c1, c2);
         pMenu.add(btn);
         return btn;
     }

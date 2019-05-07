@@ -16,7 +16,7 @@ public class CustomButton extends JButton implements MouseListener {
 
     public CustomButton(String s) {
         s = s.toUpperCase();
-        backgroundColor = Color.decode("#262a33");
+        backgroundColor = Color.decode("#262A34");
         hoverColor = Color.decode("#9d3deb");
         this.setFocusPainted(false);
         this.setText(s);
@@ -25,7 +25,7 @@ public class CustomButton extends JButton implements MouseListener {
         this.setBackground(backgroundColor);
         this.setFont(defaultFont);
         this.setOpaque(true);
-        addMouseListener(this);
+        this.addMouseListener(this);
     }
     public CustomButton(String s, Color backgroundColor, Color hoverColor) {
         s = s.toUpperCase();
@@ -39,12 +39,10 @@ public class CustomButton extends JButton implements MouseListener {
         this.setBackground(backgroundColor);
         this.setFont(defaultFont);
         this.setOpaque(true);
-        addMouseListener(this);
+        this.addMouseListener(this);
     }
 
-    public void setBackgroundColor(Color color) {
-        backgroundColor = color;
-    }
+    public void setBackgroundColor(Color color) { backgroundColor = color; }
     public void setHoverColor(Color color) {
         hoverColor = color;
     }

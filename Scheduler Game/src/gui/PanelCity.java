@@ -43,12 +43,12 @@ public class PanelCity extends JPanel implements ActionListener {
 
         // Set panel header text
         panelTitle = new JLabel("City");
-        add(panelTitle, BorderLayout.CENTER);
+        this.add(panelTitle, BorderLayout.CENTER);
 
         // Set panel dimensions
         Dimension dim = new Dimension();
-        dim.width = 700;
-        setPreferredSize(dim);
+        dim.width = 600;
+        this.setPreferredSize(dim);
     }
 
     @Override
@@ -56,16 +56,16 @@ public class PanelCity extends JPanel implements ActionListener {
         JButton clicked = (JButton)e.getSource();
 
         if (clicked == btn1) {
-            this.panelTitle.setText("Calendar - ONE");
+            this.panelTitle.setText("City - ONE");
         }
         else if (clicked == btn2) {
-            this.panelTitle.setText("Calendar - TWO");
+            this.panelTitle.setText("City - TWO");
         }
         else if (clicked == btn3) {
-            this.panelTitle.setText("Calendar - THREE");
+            this.panelTitle.setText("City - THREE");
         }
         else if (clicked == btn4) {
-            this.panelTitle.setText("Calendar - FOUR");
+            this.panelTitle.setText("City - FOUR");
         }
 
         this.revalidate();

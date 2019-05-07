@@ -51,7 +51,7 @@ public class FrameMain extends JFrame implements ActionListener {
 
         // Add initial components to FrameMain
         this.add(dashboardIcons, BorderLayout.WEST);
-        this.add(pHome, BorderLayout.EAST);
+        this.add(pHome, BorderLayout.CENTER);
 
         // Finish settings for FrameMain
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,24 +70,16 @@ public class FrameMain extends JFrame implements ActionListener {
         this.remove(pCalendar);
         this.remove(pCity);
 
-        // Reset buttons
-        /*btnHome.setBackgroundColor(Color.BLACK);
-        btnCalendar.setBackgroundColor(Color.BLACK);
-        btnCity.setBackgroundColor(Color.BLACK);*/
-
         // Activate element from button clicked
         JButton clicked = (JButton)e.getSource();
         if (clicked == btnHome) {
             this.add(pHome);
-            //btnHome.setBackgroundColor(Color.RED);
         }
         else if (clicked == btnCalendar) {
             this.add(pCalendar);
-            //btnCalendar.setBackgroundColor(Color.RED);
         }
         else if (clicked == btnCity) {
             this.add(pCity);
-            //btnCity.setBackgroundColor(Color.RED);
         }
         else if (clicked == btnLogout) {
             this.dispose();

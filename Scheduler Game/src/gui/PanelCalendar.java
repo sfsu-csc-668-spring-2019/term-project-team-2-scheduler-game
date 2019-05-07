@@ -43,12 +43,12 @@ public class PanelCalendar extends JPanel implements ActionListener {
 
         // Set panel header text
         panelTitle = new JLabel("Calendar");
-        add(panelTitle, BorderLayout.CENTER);
+        this.add(panelTitle, BorderLayout.CENTER);
 
         // Set panel dimensions
         Dimension dim = new Dimension();
-        dim.width = 700;
-        setPreferredSize(dim);
+        dim.width = 600;
+        this.setPreferredSize(dim);
     }
 
     @Override

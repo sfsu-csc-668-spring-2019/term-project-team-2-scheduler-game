@@ -16,8 +16,4 @@ public class PanelBody extends JPanel {
         dim.width = 700;
         setPreferredSize(dim);
     }
-
-    public void appendText(String text) {
-        textArea.append(text);
-    }
 }

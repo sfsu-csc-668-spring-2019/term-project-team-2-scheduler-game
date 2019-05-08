@@ -19,8 +19,6 @@ public class Task {
     private float productivity;
     private float satisfaction;
 
-    private Scheduler observer;
-
     public Task(LocalDateTime begin, Duration duration) {
         this.id = UUID.randomUUID().toString();
         this.begin = begin;
@@ -39,12 +37,35 @@ public class Task {
         this.todoList = todoList;
     }
 
-    public void attach(Scheduler scheduler) {
-        this.observer = scheduler;
+    public int update(LocalDateTime currentTime){
+        if(this.status == 0){
+            if(this.compareLocalDateTime(this.begin, currentTime)){
+                System.out.println("TASK START!");
+                this.status = 1;
+            }
+        }
+        if(this.status == 1){
+            if(this.compareLocalDateTime(this.end, currentTime)){
+                System.out.println("TASK FINISHED!");
+                this.status = 2;
+            }
+        }
+        return this.status;
     }
 
-    public void notifyObserver() {
-        this.observer.taskUpdate(this);
+    private Boolean compareLocalDateTime(LocalDateTime ldt1, LocalDateTime ldt2) {
+        if(ldt1.getYear() == ldt2.getYear()) {
+            if(ldt1.getMonth() == ldt2.getMonth()) {
+                if(ldt1.getDayOfMonth() == ldt2.getDayOfMonth()){
+                    if(ldt1.getHour() == ldt2.getHour()) {
+                        if(ldt1.getMinute() == ldt2.getMinute()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public String getId() {
@@ -82,11 +103,6 @@ public class Task {
     public float getSatisfaction() {
         return satisfaction;
     }
-
-    public Scheduler getObserver() {
-        return observer;
-    }
-
 
     public String toString(){
         String str = "";

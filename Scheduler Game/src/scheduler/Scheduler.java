@@ -91,7 +91,7 @@ public class Scheduler {
 
         if(true) {
             User tempUser = new User(username, password);
-            tempUser.checkLogin(username, password)
+            tempUser.checkLogin(username, password);
             return tempUser;
         }
         else {

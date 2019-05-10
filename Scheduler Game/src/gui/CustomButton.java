@@ -6,18 +6,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JButton;
 
-// Source: https://gist.github.com/dreger/4646029
-
 public class CustomButton extends JButton implements MouseListener {
 
     Font defaultFont = new Font("Gill Sans MT",Font.BOLD,14);
     Color textColor = Color.decode("#ffffff");
-    Color backgroundColor, hoverColor;
+    Color backgroundColor = Color.decode("#262a33");
+
+    Color darkPurple = Color.decode("#7e2cc1");
+    Color lightPurple = Color.decode("#9d3deb");
 
     public CustomButton(String s) {
         s = s.toUpperCase();
-        backgroundColor = Color.decode("#262a33");
-        hoverColor = Color.decode("#9d3deb");
         this.setFocusPainted(false);
         this.setText(s);
         this.setBorder(null);
@@ -29,12 +28,9 @@ public class CustomButton extends JButton implements MouseListener {
     }
     public CustomButton(String s, Color backgroundColor, Color hoverColor) {
         s = s.toUpperCase();
-        this.backgroundColor = backgroundColor;
-        this.hoverColor = hoverColor;
         this.setFocusPainted(false);
         this.setText(s);
         this.setBorder(null);
-        this.setForeground(textColor);
         this.setHoverColor(hoverColor);
         this.setBackground(backgroundColor);
         this.setFont(defaultFont);
@@ -46,7 +42,7 @@ public class CustomButton extends JButton implements MouseListener {
         backgroundColor = color;
     }
     public void setHoverColor(Color color) {
-        hoverColor = color;
+        lightPurple = color;
     }
 
     @Override public void mouseClicked(MouseEvent me) {}
@@ -56,7 +52,7 @@ public class CustomButton extends JButton implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if (e.getSource()==this) {
-            this.setBackground(this.hoverColor);
+            this.setBackground(this.lightPurple);
         }
     }
     @Override

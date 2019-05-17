@@ -1,9 +1,11 @@
 package city;
 
+import java.util.ArrayList;
+
 public class CivicBuilding extends Building{
 
 
-    public CivicBuilding (int [] coord, int lvl){
+    public CivicBuilding (ArrayList<Integer> coord, int lvl){
         super(coord, lvl);
     }
 

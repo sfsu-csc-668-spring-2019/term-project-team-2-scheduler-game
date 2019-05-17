@@ -1,6 +1,7 @@
 package city;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class City {
     private int streak;
@@ -11,7 +12,6 @@ public class City {
     private int lvl;
     private int expGoal; //TODO: Make a list of experience goals.
     private float expRate;
-    private float eventChance;
     private EventManager eventManager;
 
 
@@ -24,8 +24,7 @@ public class City {
         streak = 0;
         expRate = 1f;
         expGoal = 100;
-        eventManager  = new EventManager();
-        eventChance = 1;
+        eventManager  = new EventManager(1);
     }
 
     public void completeTask(){
@@ -60,12 +59,49 @@ public class City {
         streak--;
     }
 
-    public void modifyEvents(float modifier){
-        eventChance = (eventChance * (1 + modifier));
+    private void modifyEvents(float modifier){
+        eventManager.modifyIncrease(modifier);
+    }
+
+    private void modifyIncome(float modifier){
+        budget.modifyIncome(modifier);
+    }
+
+    private void modifyExperience(float modifier){
+        expRate = (expRate * (1 + modifier));
     }
 
     public void Update(){
+        Scanner scanner = new Scanner(System.in);
+        //while (true) {
+            System.out.print("Enter building type: ");
+            String type = scanner.nextLine();
+            System.out.print("Enter coordinates: ");
+            int buildingX = scanner.nextInt();
+            int buildingY = scanner.nextInt();
+            ArrayList<Integer> coord = new ArrayList<>();
+            coord.add(buildingX);
+            coord.add(buildingY);
+            BuildingFactory.BuildingType buildingType = null;
+            if (type.equals("Residential")) {
+                buildingType = BuildingFactory.BuildingType.Residential;
+            }
+            else if (type.equals("Commercial")) {
+                buildingType = BuildingFactory.BuildingType.Commercial;
+            }
+            else if (type.equals("Civic")) {
+                buildingType = BuildingFactory.BuildingType.Civic;
+            }
+            Building newBuilding = BuildingFactory.Create(buildingType, coord, this.lvl);
+            buildings.add(newBuilding);
+            updateBuildings();
+        //}
+    }
 
+    private void updateBuildings(){
+        for (Building building: buildings) {
+            building.execute(this);
+        }
     }
 
 }

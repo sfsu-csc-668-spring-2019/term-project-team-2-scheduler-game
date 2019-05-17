@@ -32,7 +32,8 @@ public class AIEngine {
         for(int i=0; i<nbTask; i++){
             LocalDateTime beginTask = sessions.get(i);
             Task task = new Task(beginTask, taskDuration);
-            task.attach(this.scheduler);
+            System.out.println(this.scheduler);
+            this.scheduler.registerObserver(task);
             tasks.add(task);
             System.out.println(task.toString());
         }

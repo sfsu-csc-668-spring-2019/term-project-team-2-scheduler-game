@@ -92,6 +92,7 @@ public class FrameSignup extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Scheduler Sign Up");
         this.setSize(400, 450);
+
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -99,6 +100,7 @@ public class FrameSignup extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         JButton clicked = (JButton)e.getSource();
 
         int validator = 0;
@@ -126,5 +128,6 @@ public class FrameSignup extends JFrame implements ActionListener {
                 }
             });
         }
+
     }
 }

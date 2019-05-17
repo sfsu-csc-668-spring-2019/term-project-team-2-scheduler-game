@@ -7,6 +7,7 @@ import javax.swing.*;
 
 // Source: https://gist.github.com/dreger/4646029
 
+
 public class CustomButton extends JButton implements MouseListener {
 
     private Font defaultFont = new Font("Gill Sans MT",Font.BOLD,14);
@@ -14,9 +15,11 @@ public class CustomButton extends JButton implements MouseListener {
     private Color backgroundColor, hoverColor;
     private CustomImage icon;
 
+
     // Used for Login and Sign Up
     public CustomButton(String s, Color backgroundColor, Color hoverColor) {
         s = s.toUpperCase();
+
         this.backgroundColor = backgroundColor;
         this.hoverColor = hoverColor;
         this.setFocusPainted(false);

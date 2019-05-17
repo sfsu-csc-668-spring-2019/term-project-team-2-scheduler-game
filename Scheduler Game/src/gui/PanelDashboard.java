@@ -35,6 +35,7 @@ public class PanelDashboard extends JPanel {
         this.add(pLogo);
         this.add(pMenu);
         pMenu.setLayout(new GridLayout(numItems, 1));
+
     }
 
     public CustomButton newDashButton(String s) {
@@ -43,9 +44,11 @@ public class PanelDashboard extends JPanel {
         return btn;
     }
 
+
     public CustomButton newDashButton(String s, String iconPath, Color c1, Color c2) {
         btn = new CustomButton(s, iconPath, c1, c2);
         pMenu.add(btn);
         return btn;
     }
+
 }

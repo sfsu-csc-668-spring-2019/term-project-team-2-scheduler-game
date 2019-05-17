@@ -19,12 +19,37 @@ public class User {
         this.level = 0;
         this.experience = 0;
 
-        this.city = new City();
+        this.city = new City(1);
         this.calendar = new Calendar();
+    }
+
+    public boolean checkLogin(String username, String password){
+
+        if (hashedPassword == password.hashCode() && name.equals(username)){
+            System.out.println("Authentication Success");
+            return true;
+        }
+        System.out.println("Authentication Failure");
+        return false;
     }
 
     public boolean checkPassword(String password){
         return (this.hashedPassword == password.hashCode());
     }
 
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
 }

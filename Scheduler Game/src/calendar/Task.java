@@ -1,5 +1,6 @@
 package calendar;
 
+import gui.NotificationFrame;
 import scheduler.Scheduler;
 
 import java.time.Duration;
@@ -14,12 +15,10 @@ public class Task {
     private LocalDateTime begin;
     private LocalDateTime end;
     private int status;         //0:todoo, 1:in-progress, 2:Done, 3:Not-finish
+    private String projectName = "Project1"; // TODO: 12/05/19
     private String description;
     private HashMap<String, Boolean> todoList;
     private float productivity;
-    private float satisfaction;
-
-    private Scheduler observer;
 
     public Task(LocalDateTime begin, Duration duration) {
         this.id = UUID.randomUUID().toString();
@@ -28,7 +27,6 @@ public class Task {
         this.end = this.begin.plusMinutes(this.duration.toMinutes());
         this.status = 0;
         this.productivity = (float) 0.0;
-        this.satisfaction = (float) 0.0;
     }
 
     public void addDescription(String description) {
@@ -39,12 +37,33 @@ public class Task {
         this.todoList = todoList;
     }
 
-    public void attach(Scheduler scheduler) {
-        this.observer = scheduler;
+    public int update(LocalDateTime currentTime){
+        if(this.status == 0){
+            if(this.compareLocalDateTime(this.begin, currentTime)){
+                NotificationFrame nf = new NotificationFrame(this);
+            }
+        }
+        if(this.status == 1){
+            if(this.compareLocalDateTime(this.end, currentTime)){
+                NotificationFrame nf = new NotificationFrame(this);
+            }
+        }
+        return this.status;
     }
 
-    public void notifyObserver() {
-        this.observer.taskUpdate(this);
+    private Boolean compareLocalDateTime(LocalDateTime ldt1, LocalDateTime ldt2) {
+        if(ldt1.getYear() == ldt2.getYear()) {
+            if(ldt1.getMonth() == ldt2.getMonth()) {
+                if(ldt1.getDayOfMonth() == ldt2.getDayOfMonth()){
+                    if(ldt1.getHour() == ldt2.getHour()) {
+                        if(ldt1.getMinute() == ldt2.getMinute()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public String getId() {
@@ -67,6 +86,10 @@ public class Task {
         return status;
     }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -79,14 +102,13 @@ public class Task {
         return productivity;
     }
 
-    public float getSatisfaction() {
-        return satisfaction;
+    public void setProductivity(float productivity) {
+        this.productivity = productivity;
     }
 
-    public Scheduler getObserver() {
-        return observer;
+    public String getProjectName() {
+        return projectName;
     }
-
 
     public String toString(){
         String str = "";

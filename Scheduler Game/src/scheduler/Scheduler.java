@@ -2,6 +2,8 @@ package scheduler;
 
 import calendar.Project;
 import calendar.Task;
+import gui.FrameMain;
+import gui.NotificationFrame;
 
 import javax.swing.*;
 import java.time.Duration;
@@ -10,8 +12,10 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimerTask;
+import java.util.Timer;
 
-public class Scheduler {
+public class Scheduler extends TimerTask {
 
     private int status;
 
@@ -21,23 +25,7 @@ public class Scheduler {
     private StatsManager statsManager;
     private Notifier notifier;
     private UIManager uiManager;
-
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    public void setPassword(String password){
-        this.password = password;
-    }
-
-    public void setUser(User user){
-        this.user = user;
-    }
-
-    //check user against db or whatevers on the
-    public boolean checkUser(String userame){
-        return true;
-    }
+    private ArrayList<Task> observers = new ArrayList<>();
 
 
     public Scheduler(String username, String password){
@@ -46,27 +34,83 @@ public class Scheduler {
         this.statsManager = new StatsManager();
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
-        
+        this.user = new User(username, password);
+        this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
 
-        boolean userExists = checkUser(username);
+
+
+        boolean userExists = checkUserInDB(username);
+
 
         if(userExists){
-            this.user = this.loadUser(username, password);
+
+            User tempUser = this.loadUser(username, password);
+            while(tempUser == null){
+                //TODO: have a way to give another password
+                String newPassword = "";
+                System.out.println("Password was incorrect. Try Again.");
+                tempUser = this.loadUser(username, newPassword);
+            }
+        }
+        else{
+            System.out.println("User does not exist upon scheduler startup.");
+            this.user = null;
         }
 
-      //TODO: Check if this portion of code is still necessary
 
-
+      //TODO: Check if this portion of code is still necessary. :should be okay to keep calendar call -Hasaan:
         //this.user = this.loadUser();
         //this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
 
     }
 
+    /**
+     * This method is run every minute
+     */
+    public void run(){
+        this.notifyObserver();
+    }
+
+    public void registerObserver(Task task){
+        this.observers.add(task);
+    }
+
+    public void unregisterObserver(Task task){
+        this.observers.remove(task);
+    }
+
+    public void notifyObserver(){
+        for(Task task : this.observers){
+            //notify only the none finished task
+            if(task.getStatus() != 2 && task.getStatus() != 3){
+                int prev_status = task.getStatus();
+                int new_status = task.update(LocalDateTime.now());
+                if(prev_status == 0 && new_status == 1){
+                    System.out.println("A new task is starting now.");
+                }
+            }
+        }
+    }
+
+    public boolean hasUser(){
+        if(this.user == null){
+            return false;
+        }
+        return true;
+    }
+
+    //check user against db or whatevers on the
+    public boolean checkUserInDB(String username){
+        return true;
+    }
 
     // check if a user exist, if not, propose to create one
     //private User loadUser(String username, String password){
+
+    //TODO: Need this to be able to send back a null user if password is wrong
     private User loadUser(String username, String password){
 
+        /*
         //NEED A DB TO REFERENCE FOR THIS ONE
         if (username.equals("temp")){
             //return user;
@@ -81,20 +125,11 @@ public class Scheduler {
         else{
             System.out.println("No user " + username + " found. Create new user?");
             return null;
-        }
+        }*/
 
         return new User("user1", "qwerty");
         //return new User(username, password);
 
-    }
-
-
-
-    public void run(){
-        this.status = 1;
-        while(this.status == 1){
-            System.out.println("It's run!");
-        }
     }
 
     /**
@@ -114,6 +149,13 @@ public class Scheduler {
     }
 
 
+    public static void userCheckInScheduler(Scheduler scheduler){
+        boolean userExists = scheduler.hasUser();
+        if(!userExists){
+            System.out.println("User DNE. Create new user?");
+        }
+    }
+
 
     public static void main(String[] args) {
 
@@ -124,32 +166,38 @@ public class Scheduler {
 
         Scheduler scheduler = new Scheduler(username, password);
 
-        /*
-        User checkUser = scheduler.loadUser(username, password);
-        if(checkUser == null){
-            //have some method to create new user
-            System.out.println("Create new user here.");
+        userCheckInScheduler(scheduler);
 
-            //scheduler.setUser();
-        }
-        */
-        scheduler.run();
+        Timer t1 = new Timer();
+        t1.schedule(scheduler, 0,60000);
 
 
+        System.out.println("Schedueler is running...");
 
-        /*System.out.println("Schedueler is running...");
-
-        new Login();
-
-        Scheduler s = new Scheduler();
-
-        Project project = s.user.getCalendar().getProjectBuilder().build("Project1",
+        Project project = scheduler.user.getCalendar().getProjectBuilder().build("Project1",
                                                                         "description of the project",
                                                                         new ArrayList<String>(),
                                                                         Duration.ofHours(2),
-                                                                        LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
-        s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
-        */
+                                                                        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00));
+        scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
+        project.getTasks().get(0).setStatus(1);
+
+        FrameMain mf = new FrameMain();
+        NotificationFrame nf = new NotificationFrame(project.getTasks().get(0));
+
     }
+
+    public void setUsername(String username){
+        this.username = username;
+    }
+
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
 
 }

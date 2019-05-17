@@ -34,6 +34,12 @@ public class Scheduler {
         this.user = user;
     }
 
+    //check user against db or whatevers on the
+    public boolean checkUser(String userame){
+        return true;
+    }
+
+
     public Scheduler(String username, String password){
         this.status = 0;
 
@@ -41,12 +47,18 @@ public class Scheduler {
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
         
-      
-      //TODO: Check if this portion of code is still necessary
-        this.user = this.loadUser(username, password);
 
-        this.user = this.loadUser();
-        this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
+        boolean userExists = checkUser(username);
+
+        if(userExists){
+            this.user = this.loadUser(username, password);
+        }
+
+      //TODO: Check if this portion of code is still necessary
+
+
+        //this.user = this.loadUser();
+        //this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
 
     }
 
@@ -71,7 +83,7 @@ public class Scheduler {
             return null;
         }
 
-        //return new User("user1", "qwerty");
+        return new User("user1", "qwerty");
         //return new User(username, password);
 
     }
@@ -123,7 +135,10 @@ public class Scheduler {
         */
         scheduler.run();
 
-        System.out.println("Schedueler is running...");
+
+
+        /*System.out.println("Schedueler is running...");
+
         new Login();
 
         Scheduler s = new Scheduler();
@@ -134,6 +149,7 @@ public class Scheduler {
                                                                         Duration.ofHours(2),
                                                                         LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
         s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
+        */
     }
 
 }

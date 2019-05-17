@@ -28,14 +28,33 @@ public class Scheduler extends TimerTask {
     private ArrayList<Task> observers = new ArrayList<>();
 
 
+    //check user against db or whatevers on the
+    public boolean checkUser(String userame){
+        return true;
+    }
+
+
     public Scheduler(String username, String password){
         this.status = 0;
 
         this.statsManager = new StatsManager();
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
-        this.user = new User(username, password);
-        this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
+
+        
+
+        boolean userExists = checkUser(username);
+
+        if(userExists){
+            this.user = this.loadUser(username, password);
+        }
+
+      //TODO: Check if this portion of code is still necessary
+
+
+        //this.user = this.loadUser();
+        //this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
+
 
 
 
@@ -172,13 +191,26 @@ public class Scheduler extends TimerTask {
         t1.schedule(scheduler, 0,60000);
 
 
+
+
+        /*System.out.println("Schedueler is running...");
+
+        new Login();
+
+
         System.out.println("Schedueler is running...");
 
         Project project = scheduler.user.getCalendar().getProjectBuilder().build("Project1",
                                                                         "description of the project",
                                                                         new ArrayList<String>(),
                                                                         Duration.ofHours(2),
-                                                                        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00));
+
+                                                                        LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
+        s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
+        */
+        
+        //Left as result of merge conflict. If causing problems please delete
+        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00));
         scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
         project.getTasks().get(0).setStatus(1);
 
@@ -189,6 +221,7 @@ public class Scheduler extends TimerTask {
 
     public void setUsername(String username){
         this.username = username;
+
     }
 
     public void setPassword(String password){

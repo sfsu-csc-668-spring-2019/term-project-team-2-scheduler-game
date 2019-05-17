@@ -1,33 +1,40 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.JButton;
+import javax.swing.*;
 
 // Source: https://gist.github.com/dreger/4646029
 
+
 public class CustomButton extends JButton implements MouseListener {
 
-    Font defaultFont = new Font("Gill Sans MT",Font.BOLD,14);
-    Color textColor = Color.decode("#ffffff");
-    Color backgroundColor, hoverColor;
+    private Font defaultFont = new Font("Gill Sans MT",Font.BOLD,14);
+    private Color textColor = Color.decode("#ffffff");
+    private Color backgroundColor, hoverColor;
+    private CustomImage icon;
 
-    public CustomButton(String s) {
+
+    // Used for Login and Sign Up
+    public CustomButton(String s, Color backgroundColor, Color hoverColor) {
         s = s.toUpperCase();
-        backgroundColor = Color.decode("#262a33");
-        hoverColor = Color.decode("#9d3deb");
+
+        this.backgroundColor = backgroundColor;
+        this.hoverColor = hoverColor;
         this.setFocusPainted(false);
         this.setText(s);
         this.setBorder(null);
         this.setForeground(textColor);
+        this.setHoverColor(hoverColor);
         this.setBackground(backgroundColor);
         this.setFont(defaultFont);
         this.setOpaque(true);
-        addMouseListener(this);
+        this.addMouseListener(this);
     }
-    public CustomButton(String s, Color backgroundColor, Color hoverColor) {
+
+    // Used for the top level menu (with the icons)
+    public CustomButton(String s, String iconPath, Color backgroundColor, Color hoverColor) {
         s = s.toUpperCase();
         this.backgroundColor = backgroundColor;
         this.hoverColor = hoverColor;
@@ -39,12 +46,28 @@ public class CustomButton extends JButton implements MouseListener {
         this.setBackground(backgroundColor);
         this.setFont(defaultFont);
         this.setOpaque(true);
-        addMouseListener(this);
+        this.addMouseListener(this);
+
+        icon = new CustomImage(new ImageIcon(iconPath).getImage());
+        this.add(icon);
     }
 
-    public void setBackgroundColor(Color color) {
-        backgroundColor = color;
+    // Used for the lower level menu (for each panel)
+    public CustomButton(String s) {
+        s = s.toUpperCase();
+        this.backgroundColor = Color.decode("#262A34");
+        this.hoverColor = Color.decode("#9d3deb");
+        this.setFocusPainted(false);
+        this.setText(s);
+        this.setBorder(null);
+        this.setForeground(textColor);
+        this.setBackground(backgroundColor);
+        this.setFont(defaultFont);
+        this.setOpaque(true);
+        this.addMouseListener(this);
     }
+
+    public void setBackgroundColor(Color color) { backgroundColor = color; }
     public void setHoverColor(Color color) {
         hoverColor = color;
     }

@@ -3,11 +3,11 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class BodyPanel extends JPanel {
+public class PanelBody extends JPanel {
 
     private JTextArea textArea;
 
-    public BodyPanel() {
+    public PanelBody() {
         textArea = new JTextArea();
         setLayout(new BorderLayout());
         add(textArea, BorderLayout.CENTER);

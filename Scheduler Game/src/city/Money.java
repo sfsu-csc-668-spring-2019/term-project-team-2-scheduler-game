@@ -12,4 +12,8 @@ public class Money {
     public void gainIncome(){
         amt += income;
     }
+
+    public void modifyIncome(float modifier){
+        income = income * (1 + modifier);
+    }
 }

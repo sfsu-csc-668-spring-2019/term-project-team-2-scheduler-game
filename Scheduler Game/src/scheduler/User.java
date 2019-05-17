@@ -19,7 +19,7 @@ public class User {
         this.level = 0;
         this.experience = 0;
 
-        this.city = new City(1);
+        this.city = new City();
         this.calendar = new Calendar();
     }
 

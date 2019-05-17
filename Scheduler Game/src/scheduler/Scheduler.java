@@ -58,7 +58,7 @@ public class Scheduler extends TimerTask {
 
 
 
-        boolean userExists = checkUserInDB(username);
+        //boolean userExists = checkUserInDB(username);
 
 
         if(userExists){
@@ -193,9 +193,9 @@ public class Scheduler extends TimerTask {
 
 
 
-        /*System.out.println("Schedueler is running...");
+        System.out.println("Schedueler is running...");
 
-        new Login();
+        //new Login();
 
 
         System.out.println("Schedueler is running...");
@@ -206,11 +206,11 @@ public class Scheduler extends TimerTask {
                                                                         Duration.ofHours(2),
 
                                                                         LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
-        s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
-        */
+        scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
+
         
         //Left as result of merge conflict. If causing problems please delete
-        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00));
+        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00);
         scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
         project.getTasks().get(0).setStatus(1);
 

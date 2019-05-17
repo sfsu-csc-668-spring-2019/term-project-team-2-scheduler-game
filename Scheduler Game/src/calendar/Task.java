@@ -1,5 +1,6 @@
 package calendar;
 
+import gui.NotificationFrame;
 import scheduler.Scheduler;
 
 import java.time.Duration;
@@ -14,10 +15,10 @@ public class Task {
     private LocalDateTime begin;
     private LocalDateTime end;
     private int status;         //0:todoo, 1:in-progress, 2:Done, 3:Not-finish
+    private String projectName = "Project1"; // TODO: 12/05/19
     private String description;
     private HashMap<String, Boolean> todoList;
     private float productivity;
-    private float satisfaction;
 
     public Task(LocalDateTime begin, Duration duration) {
         this.id = UUID.randomUUID().toString();
@@ -26,7 +27,6 @@ public class Task {
         this.end = this.begin.plusMinutes(this.duration.toMinutes());
         this.status = 0;
         this.productivity = (float) 0.0;
-        this.satisfaction = (float) 0.0;
     }
 
     public void addDescription(String description) {
@@ -40,14 +40,12 @@ public class Task {
     public int update(LocalDateTime currentTime){
         if(this.status == 0){
             if(this.compareLocalDateTime(this.begin, currentTime)){
-                System.out.println("TASK START!");
-                this.status = 1;
+                NotificationFrame nf = new NotificationFrame(this);
             }
         }
         if(this.status == 1){
             if(this.compareLocalDateTime(this.end, currentTime)){
-                System.out.println("TASK FINISHED!");
-                this.status = 2;
+                NotificationFrame nf = new NotificationFrame(this);
             }
         }
         return this.status;
@@ -88,6 +86,10 @@ public class Task {
         return status;
     }
 
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -100,8 +102,12 @@ public class Task {
         return productivity;
     }
 
-    public float getSatisfaction() {
-        return satisfaction;
+    public void setProductivity(float productivity) {
+        this.productivity = productivity;
+    }
+
+    public String getProjectName() {
+        return projectName;
     }
 
     public String toString(){

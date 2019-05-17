@@ -2,6 +2,8 @@ package scheduler;
 
 import calendar.Project;
 import calendar.Task;
+import gui.MainFrame;
+import gui.NotificationFrame;
 
 import javax.swing.*;
 import java.time.Duration;
@@ -11,6 +13,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimerTask;
+import java.util.Timer;
 
 public class Scheduler extends TimerTask {
 
@@ -31,6 +34,9 @@ public class Scheduler extends TimerTask {
         this.statsManager = new StatsManager();
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
+        this.user = new User(username, password);
+        this.user.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(this);
+
         
 
         boolean userExists = checkUserInDB(username);
@@ -162,22 +168,23 @@ public class Scheduler extends TimerTask {
 
         userCheckInScheduler(scheduler);
 
+        Timer t1 = new Timer();
+        t1.schedule(scheduler, 0,60000);
 
 
-        //TODO: Check if this is still fine after new changes to scheduler/user files
-        /*System.out.println("Schedueler is running...");
+        System.out.println("Schedueler is running...");
 
-        new Login();
-
-        Scheduler s = new Scheduler();
-
-        Project project = s.user.getCalendar().getProjectBuilder().build("Project1",
+        Project project = scheduler.user.getCalendar().getProjectBuilder().build("Project1",
                                                                         "description of the project",
                                                                         new ArrayList<String>(),
                                                                         Duration.ofHours(2),
-                                                                        LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
-        s.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
-        */
+                                                                        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00));
+        scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
+        project.getTasks().get(0).setStatus(1);
+
+        MainFrame mf = new MainFrame();
+        NotificationFrame nf = new NotificationFrame(project.getTasks().get(0));
+
     }
 
     public void setUsername(String username){

@@ -59,21 +59,21 @@ public class City {
         streak--;
     }
 
-    public void modifyEvents(float modifier){
+    private void modifyEvents(float modifier){
         eventManager.modifyIncrease(modifier);
     }
 
-    public void modifyIncome(float modifier){
+    private void modifyIncome(float modifier){
         budget.modifyIncome(modifier);
     }
 
-    public void modifyExperience(float modifier){
+    private void modifyExperience(float modifier){
         expRate = (expRate * (1 + modifier));
     }
 
     public void Update(){
         Scanner scanner = new Scanner(System.in);
-        while (true) {
+        //while (true) {
             System.out.print("Enter building type: ");
             String type = scanner.nextLine();
             System.out.print("Enter coordinates: ");
@@ -95,7 +95,7 @@ public class City {
             Building newBuilding = BuildingFactory.Create(buildingType, coord, this.lvl);
             buildings.add(newBuilding);
             updateBuildings();
-        }
+        //}
     }
 
     private void updateBuildings(){

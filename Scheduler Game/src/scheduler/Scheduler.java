@@ -128,19 +128,13 @@ public class Scheduler extends TimerTask {
         }
 
 
-
-        //System.exit(1);
-
-
-
-
-        String username = "user1";
-        String password = "qwerty";
-
+        //main scheduler declaration
+        //use methods to change the values inside this
         Scheduler scheduler = new Scheduler();
 
+        //this is just a test to have a user get loaded
+        //change this if you need it for a userlogin ui
         int check = scheduler.loadUser("Hasaan","123");
-
         System.out.println(check);
 
         //scheduler.createUser("bobby","asd");

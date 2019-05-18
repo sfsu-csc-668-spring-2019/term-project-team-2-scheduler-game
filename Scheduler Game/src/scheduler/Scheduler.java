@@ -146,6 +146,7 @@ public class Scheduler extends TimerTask {
         //scheduler.createUser("bobby","asd");
 
 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~REMOVE THE STATEMENT BELOW THIS IF YOU WANT THE ENTIRE PROGRAM TO RUN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         System.exit(1);
 
         Timer t1 = new Timer();

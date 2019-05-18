@@ -14,9 +14,7 @@ public class FrameLogin extends JFrame implements ActionListener {
     private JPasswordField txtPassword;
     private CustomButton btnLogin, btnSignup;
 
-
     public FrameLogin(String s) {
-
 
         // Helpers
         Dimension dim = new Dimension();
@@ -36,9 +34,7 @@ public class FrameLogin extends JFrame implements ActionListener {
         lbUsername.setLabelFor(txtUsername);
         p.add(txtUsername);
 
-
         lbPassword = new JLabel("Password: ", JLabel.TRAILING);
-
         lbPassword.setForeground(Color.WHITE);
         p.add(lbPassword);
         txtPassword = new JPasswordField(20);
@@ -69,9 +65,7 @@ public class FrameLogin extends JFrame implements ActionListener {
         btnSignup.addActionListener(this);
         btnSignup.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, bgColor));
 
-
         lbMessage = new JLabel(s, SwingConstants.CENTER);
-
         lbMessage.setForeground(Color.WHITE);
 
         buttonsPanel.add(btnLogin);

@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 
 public class FrameMain extends JFrame implements ActionListener {
 
-
     private PanelDashboard dashboardIcons;
     private String iconHome, iconCalendar, iconCity, iconLogout;
     private CustomButton btnHome, btnCalendar, btnCity, btnLogout;
@@ -17,11 +16,9 @@ public class FrameMain extends JFrame implements ActionListener {
     private PanelCalendar pCalendar;
     private PanelCity pCity;
 
-
     public FrameMain() {
         super("Scheduler Game");
         this.setLayout(new BorderLayout());
-
 
         // Create the main panels that will have the main content
         dashboardIcons = new PanelDashboard();
@@ -47,17 +44,14 @@ public class FrameMain extends JFrame implements ActionListener {
         btnLogout   = dashboardIcons.newDashButton("Logout", iconLogout, dashboardBg, btnHover);
 
         // Add action listeners to all buttons
-
         btnHome.addActionListener(this);
         btnCalendar.addActionListener(this);
         btnCity.addActionListener(this);
         btnLogout.addActionListener(this);
 
-
         // Add initial components to FrameMain
         this.add(dashboardIcons, BorderLayout.WEST);
         this.add(pHome, BorderLayout.CENTER);
-
 
         // Finish settings for FrameMain
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +64,6 @@ public class FrameMain extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
 
         // Reset panels
         this.remove(pHome);
@@ -87,13 +80,11 @@ public class FrameMain extends JFrame implements ActionListener {
         }
         else if (clicked == btnCity) {
             this.add(pCity);
-
         }
         else if (clicked == btnLogout) {
             this.dispose();
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-
                     new FrameLogin("Logged out successfully!");
                 }
             });
@@ -103,6 +94,5 @@ public class FrameMain extends JFrame implements ActionListener {
         this.revalidate();
         this.repaint();
         pack();
-
     }
 }

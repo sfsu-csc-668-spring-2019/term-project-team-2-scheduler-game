@@ -23,7 +23,7 @@ public class FrameLogin extends JFrame implements ActionListener {
         Color bgColor = Color.decode("#262a33");
 
         // Logo
-        logoPanel = new CustomImage(new ImageIcon("images/logo-login.png").getImage());
+        logoPanel = new CustomImage(new ImageIcon("src/images/logo-login.png").getImage());
 
         // Form (Step 1) - Create and populate the panel
         JPanel p = new JPanel(new SpringLayout());

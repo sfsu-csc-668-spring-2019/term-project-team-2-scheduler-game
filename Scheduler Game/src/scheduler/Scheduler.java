@@ -52,26 +52,24 @@ public class Scheduler extends TimerTask {
     }
 
 
-    public static void updateProjects(JSONObject projects){
-        myuser.updateProject(projects);
+    public static void updateProjects(DBManager dbManager, JSONObject projects){
+        dbManager.updateProject(myuser, projects);
 
     }
 
-    public static JSONObject getProjectFromUser(){
-        return myuser.getProject();
+    public static JSONObject getProjectFromUser(DBManager dbManager){
+        return dbManager.getProject(myuser);
 
     }
 
-    public static void createUser(String username, String password){
-        User user = new User();
-        user.createUser(username, password);
-        myuser = user;
+    public static void createUser(DBManager dbManager, String username, String password){
+        myuser = dbManager.createUser(username, password);
     }
 
-    public static int loadUser(String username, String password){
+    public static int loadUser(DBManager dbManager, String username, String password){
 
-        User user = new User();
-        if(user.checkLogin(username, password) == 0){
+        User user = dbManager.checkLogin(username, password);
+        if(user != null){
             myuser = user;
 
             return 0;
@@ -159,7 +157,7 @@ public class Scheduler extends TimerTask {
 
 
 
-
+        DBManager dbManager = new DBManager();
         //main scheduler declaration
         //use methods to change the values inside this
         Scheduler scheduler = new Scheduler();

@@ -81,7 +81,7 @@ public class FrameProject extends JFrame implements ActionListener {
         dim.height = 130;
         buttonsPanel.setPreferredSize(dim);
 
-        if(s == "Add") btnDone = new CustomButton("ADD PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
+        if(s == "Add Project") btnDone = new CustomButton("ADD PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
         else btnDone = new CustomButton("EDIT PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
         btnDone.addActionListener(this);
         btnDone.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, bgColor));
@@ -108,7 +108,6 @@ public class FrameProject extends JFrame implements ActionListener {
         // JFrame
         this.setLayout(new BorderLayout());
         this.add(frameContainer, BorderLayout.CENTER);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Scheduler Login");
         this.setSize(400, 450);
         this.setResizable(false);

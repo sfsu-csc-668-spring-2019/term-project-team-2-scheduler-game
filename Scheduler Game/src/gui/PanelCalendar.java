@@ -9,26 +9,25 @@ import java.lang.reflect.Array;
 public class PanelCalendar extends JPanel implements ActionListener {
 
     private PanelDashboard dashboardCalendar;
-    private JLabel panelTitle;
-    private String newProject;
-
-    private int projectCount;
-    private String[] projects = new String[12];;
-    private JPanel[] panelArray = new JPanel[12];
     private CustomButton[] btnArray = new CustomButton[12];
+    private PanelProject[] projectArray = new PanelProject[10];
+    private int projectCount;
 
     public PanelCalendar() {
 
-        // Get count of projects
-        projectCount = 3;
-        projects[0] = "Project 1";
-        projects[1] = "Project 2";
-        projects[2] = "Project 3";
+        // @TODO - Replace 3 with a getProjectsCount()
+        projectCount = 3; //PLACEHOLDER
+
+        // @TODO - Delete lines below
+        String[] projects = new String[10]; //PLACEHOLDER
+        projects[0] = "Project 1"; //PLACEHOLDER
+        projects[1] = "Project 2"; //PLACEHOLDER
+        projects[2] = "Project 3"; //PLACEHOLDER
 
         // Create the main panels that will have the main content
         dashboardCalendar = new PanelDashboard("src/images/logo-calendar.png", 12);
-        for(int i=0; i<projectCount; i++) {
-            panelArray[i] = new JPanel();
+        for(int i=0; i<10; i++) {
+            projectArray[i] = new PanelProject(i);
         }
 
         // Create the dashboard button for each of the main panels
@@ -54,11 +53,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
         // Add initial components to FrameMain
         this.setLayout(new BorderLayout());
         this.add(dashboardCalendar, BorderLayout.WEST);
-        this.add(panelArray[0], BorderLayout.EAST);
-
-        // Set panel header text
-        panelTitle = new JLabel("Calendar");
-        this.add(panelTitle, BorderLayout.CENTER);
+        this.add(projectArray[0], BorderLayout.EAST);
 
         // Set panel dimensions
         Dimension dim = new Dimension();
@@ -70,14 +65,20 @@ public class PanelCalendar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton)e.getSource();
 
-        for(int i=0; i<projectCount; i++) {
+        // Reset panels
+        for(int i=0; i<10; i++) {
+            this.remove(projectArray[i]);
+        }
+
+        // Display only the correct panel
+        for(int i=0; i<10; i++) {
             if (clicked == btnArray[i]) {
-                this.panelTitle.setText("Project " + (i+1));
+                this.add(projectArray[i], BorderLayout.EAST);
                 break;
             }
         }
 
-        if (clicked == btnArray[11]) {
+        if (clicked == btnArray[10]) {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     new FrameProject("Add Project");

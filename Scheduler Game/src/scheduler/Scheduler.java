@@ -29,12 +29,16 @@ public class Scheduler extends TimerTask {
 
     //private User user = new User();
 
+    private static DBManager dbManager = new DBManager();
     private StatsManager statsManager;
     private Notifier notifier;
     private UIManager uiManager;
     private static User myuser;
     private ArrayList<Task> observers = new ArrayList<>();
 
+    private DBManager getDBManager(){
+        return this.dbManager;
+    }
 
 
     public Scheduler(){
@@ -52,21 +56,21 @@ public class Scheduler extends TimerTask {
     }
 
 
-    public static void updateProjects(DBManager dbManager, JSONObject projects){
+    public static void updateProjects(JSONObject projects){
         dbManager.updateProject(myuser, projects);
 
     }
 
-    public static JSONObject getProjectFromUser(DBManager dbManager){
+    public static JSONObject getProjectFromUser(){
         return dbManager.getProject(myuser);
 
     }
 
-    public static void createUser(DBManager dbManager, String username, String password){
+    public static void createUser(String username, String password){
         myuser = dbManager.createUser(username, password);
     }
 
-    public static int loadUser(DBManager dbManager, String username, String password){
+    public static int loadUser(String username, String password){
 
         User user = dbManager.checkLogin(username, password);
         if(user != null){

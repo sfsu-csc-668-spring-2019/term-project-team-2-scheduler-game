@@ -11,6 +11,7 @@ import calendar.Task;
 import gui.FrameMain;
 import gui.NotificationFrame;
 import javax.swing.*;
+import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -73,6 +74,10 @@ public class Scheduler extends TimerTask {
                                                                          Duration.ofHours(Hduration),
                                                                          deadline);
         myuser.getCalendar().getProjectBuilder().buildWorkSessions(project);
+    }
+
+    public static ArrayList<Project> getProjects(){
+        return myuser.getCalendar().getProjects();
     }
 
     /**

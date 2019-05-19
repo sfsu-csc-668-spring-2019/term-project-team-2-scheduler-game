@@ -1,5 +1,8 @@
 package calendar;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,10 +12,10 @@ public class Project {
     private String id;
     private String name;
     private String description;
-    private ArrayList<String> tags;
+    private ArrayList<String> tags = new ArrayList<>();
     private Duration duration;
     private LocalDateTime deadline;
-    private ArrayList<Task> tasks;
+    private ArrayList<Task> tasks = new ArrayList<>();
 
     public Project(){
 
@@ -75,7 +78,7 @@ public class Project {
     }
 
     public String toJSON(){
-        String str = "{";
+        /*String str = "{";
         str += '"'+ this.id+"\":{";
             str += "\"Name\": "+ this.name + ",";
             str += "\"Description\": "+ this.description + ",";
@@ -87,9 +90,22 @@ public class Project {
                     if(i < this.getTasks().size()-1){str += ",";}
                 }
             str += "}";
-        str += "}";
+        str += "}";*/
 
         //System.out.println(str+"}");
-        return str+"}";
+        JSONObject projectDetails = new JSONObject();
+        projectDetails.put("Id", (String)this.id);
+        projectDetails.put("Name", this.name);
+        projectDetails.put("Description", this.description);
+        projectDetails.put("Duration", Long.toString(duration.toHours()));
+        projectDetails.put("Deadline", this.deadline.toString());
+
+        JSONArray taskList = new JSONArray();
+        for(int i=0; i<this.getTasks().size(); i++){
+            taskList.add(this.getTasks().get(i).toJSON());
+        }
+        projectDetails.put("Tasks", taskList);
+
+        return projectDetails.toJSONString();
     }
 }

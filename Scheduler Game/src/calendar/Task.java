@@ -1,6 +1,7 @@
 package calendar;
 
 import gui.NotificationFrame;
+import org.json.simple.JSONObject;
 import scheduler.Scheduler;
 
 import java.time.Duration;
@@ -111,6 +112,14 @@ public class Task {
         return projectName;
     }
 
+    public void setId(String id) { this.id = id; }
+
+    public void setEnd(LocalDateTime end) { this.end = end; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public void setTodoList(HashMap<String, Boolean> todoList) { this.todoList = todoList; }
+
     public String toString(){
         String str = "";
         str += "id: " + this.id + "\n";
@@ -119,8 +128,8 @@ public class Task {
         return str;
     }
 
-    public String toJSON(){
-        String str = "{";
+    public JSONObject toJSON(){
+        /*String str = "{";
         str += '"'+ this.id+"\":{";
             str += "\"ProjectName\": "+ this.projectName + ",";
             str += "\"Status\": "+ this.status + ",";
@@ -132,6 +141,17 @@ public class Task {
         str += "}";
 
         //System.out.println(str+"}");
-        return str+"}";
+        return str+"}";*/
+        JSONObject taskDetails = new JSONObject();
+        taskDetails.put("Id", this.id);
+        taskDetails.put("ProjectName", this.projectName);
+        taskDetails.put("Status", Integer.toString(this.status));
+        taskDetails.put("Duration", Long.toString(this.duration.toHours()));
+        taskDetails.put("Description", this.description);
+        taskDetails.put("Productivity", Float.toString(this.productivity));
+        taskDetails.put("BeginTime", this.begin.toString());
+        taskDetails.put("EndTime", this.end.toString());
+
+        return taskDetails;
     }
 }

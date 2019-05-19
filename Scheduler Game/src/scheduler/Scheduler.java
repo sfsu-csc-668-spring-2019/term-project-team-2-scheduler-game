@@ -68,12 +68,7 @@ public class Scheduler extends TimerTask {
     }
 
     public static  void createProject(String name, String description, int Hduration, LocalDateTime deadline){
-        Project project = myuser.getCalendar().getProjectBuilder().build(name,
-                                                                         description,
-                                                                         new ArrayList<String>(),
-                                                                         Duration.ofHours(Hduration),
-                                                                         deadline);
-        myuser.getCalendar().getProjectBuilder().buildWorkSessions(project);
+        myuser.getCalendar().addProject(name, description, new ArrayList<String>(), Duration.ofHours(Hduration), deadline);
     }
 
     public static ArrayList<Project> getProjects(){
@@ -146,6 +141,9 @@ public class Scheduler extends TimerTask {
         //main scheduler declaration
         //use methods to change the values inside this
         Scheduler scheduler = new Scheduler();
+        //run scheduler.run() in a other thread every minute
+        Timer timer = new Timer();
+        timer.schedule(scheduler, 0,60000);
 
         // Starts the GUI
         // Launches the Login frame

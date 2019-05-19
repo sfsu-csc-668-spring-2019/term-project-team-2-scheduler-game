@@ -15,13 +15,14 @@ public class Task {
     private LocalDateTime begin;
     private LocalDateTime end;
     private int status;         //0:todoo, 1:in-progress, 2:Done, 3:Not-finish
-    private String projectName = "Project1"; // TODO: 12/05/19
+    private String projectName; // TODO: 12/05/19
     private String description;
     private HashMap<String, Boolean> todoList;
     private float productivity;
 
-    public Task(LocalDateTime begin, Duration duration) {
+    public Task(String projectName, LocalDateTime begin, Duration duration) {
         this.id = UUID.randomUUID().toString();
+        this.projectName = projectName;
         this.begin = begin;
         this.duration = duration;
         this.end = this.begin.plusMinutes(this.duration.toMinutes());
@@ -116,5 +117,21 @@ public class Task {
         str += "Begin: " + this.begin + "\tEnd: " + this.end +  "\tDuration: " + this.duration + "\n";
         str += "Status: " + this.status ;
         return str;
+    }
+
+    public String toJSON(){
+        String str = "{";
+        str += '"'+ this.id+"\":{";
+            str += "\"ProjectName\": "+ this.projectName + ",";
+            str += "\"Status\": "+ this.status + ",";
+            str += "\"Duration\": "+ this.duration.toHours() + ",";
+            str += "\"Description\": "+ this.description + ",";
+            str += "\"Productivity\": "+ this.productivity + ",";
+            str += "\"BeginTime\": "+ this.begin + ",";
+            str += "\"EndTime\": "+ this.end ;
+        str += "}";
+
+        //System.out.println(str+"}");
+        return str+"}";
     }
 }

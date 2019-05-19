@@ -73,4 +73,23 @@ public class Project {
     public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
+
+    public String toJSON(){
+        String str = "{";
+        str += '"'+ this.id+"\":{";
+            str += "\"Name\": "+ this.name + ",";
+            str += "\"Description\": "+ this.description + ",";
+            str += "\"Duration\": "+ this.duration.toHours() + ",";
+            str += "\"Deadline\": "+ this.deadline + ",";
+            str += "\"Tasks\": {";
+                for(int i=0; i<this.getTasks().size(); i++){
+                    str += this.getTasks().get(i).toJSON();
+                    if(i < this.getTasks().size()-1){str += ",";}
+                }
+            str += "}";
+        str += "}";
+
+        //System.out.println(str+"}");
+        return str+"}";
+    }
 }

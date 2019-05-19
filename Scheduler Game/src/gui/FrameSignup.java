@@ -22,7 +22,7 @@ public class FrameSignup extends JFrame implements ActionListener {
         Color bgColor = Color.decode("#262a33");
 
         // Logo
-        logoPanel = new CustomImage(new ImageIcon("images/logo-login.png").getImage());
+        logoPanel = new CustomImage(new ImageIcon("src/images/logo-login.png").getImage());
 
         // Form (Step 1) - Create and populate the panel
         JPanel p = new JPanel(new SpringLayout());
@@ -102,7 +102,6 @@ public class FrameSignup extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton)e.getSource();
 
-        int validator = 0;
         String userName = txtUsername.getText();
         String password1 = String.valueOf(txtPassword1.getPassword());
         String password2 = String.valueOf(txtPassword2.getPassword());
@@ -115,10 +114,7 @@ public class FrameSignup extends JFrame implements ActionListener {
                 lbMessage.setText("Password does not match.");
             }
             else {
-                validator = 1;
-
                 Scheduler.createUser(userName, password1);
-
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         new FrameLogin("Account successfully created!");
@@ -129,6 +125,11 @@ public class FrameSignup extends JFrame implements ActionListener {
 
         if (clicked == btnCancel) {
             this.dispose();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new FrameLogin("");
+                }
+            });
         }
     }
 }

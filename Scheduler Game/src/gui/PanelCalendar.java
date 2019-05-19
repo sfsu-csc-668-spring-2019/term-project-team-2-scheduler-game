@@ -16,7 +16,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
     public PanelCalendar() {
 
         // Create the main panels that will have the main content
-        dashboardCalendar = new PanelDashboard("images/logo-calendar.png", 12);
+        dashboardCalendar = new PanelDashboard("src/images/logo-calendar.png", 12);
         p1 = new JPanel();
         p2 = new JPanel();
         p3 = new JPanel();

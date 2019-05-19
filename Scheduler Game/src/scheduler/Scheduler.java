@@ -52,6 +52,15 @@ public class Scheduler extends TimerTask {
     }
 
 
+    public static void updateProjects(JSONObject projects){
+        myuser.updateProject(projects);
+
+    }
+
+    public static JSONObject getProjectFromUser(){
+        return myuser.getProject();
+
+    }
 
     public static void createUser(String username, String password){
         User user = new User();
@@ -151,6 +160,8 @@ public class Scheduler extends TimerTask {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+
 
 
 

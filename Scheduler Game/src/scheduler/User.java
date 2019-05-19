@@ -41,6 +41,70 @@ public class User {
         this.calendar = new Calendar();
     }
 
+    public JSONObject getProject(){
+
+
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader("database.json")) {
+
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            System.out.println(jsonObject);
+
+
+
+            if(jsonObject.containsKey(this.name)){
+                System.out.println(jsonObject.get(this.name));
+                JSONObject temp = (JSONObject) jsonObject.get(this.name);
+                return (JSONObject) temp.get("projects");
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void updateProject(JSONObject projects){
+
+
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader("database.json")) {
+
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            System.out.println(jsonObject);
+
+
+
+            if(jsonObject.containsKey(this.name)){
+                System.out.println(jsonObject.get(this.name));
+                JSONObject temp = (JSONObject) jsonObject.get(this.name);
+                temp.put("projects", projects);
+                jsonObject.put(this.name, temp);
+
+
+                try (FileWriter file = new FileWriter("database.json", false)) {
+                    file.write(jsonObject.toJSONString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public int checkLogin(String username, String password){
 
 

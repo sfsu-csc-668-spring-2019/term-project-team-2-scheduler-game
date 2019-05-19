@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import scheduler.Scheduler;
 
 public class FrameSignup extends JFrame implements ActionListener {
 
@@ -115,16 +116,19 @@ public class FrameSignup extends JFrame implements ActionListener {
             }
             else {
                 validator = 1;
+
+                Scheduler.createUser(userName, password1);
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        new FrameLogin("Account successfully created!");
+                    }
+                });
             }
         }
 
-        if (clicked == btnCancel || validator == 1) {
+        if (clicked == btnCancel) {
             this.dispose();
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    new FrameLogin("Account successfully created!");
-                }
-            });
         }
     }
 }

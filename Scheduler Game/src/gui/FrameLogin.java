@@ -1,5 +1,7 @@
 package gui;
 
+import scheduler.Scheduler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -98,13 +100,20 @@ public class FrameLogin extends JFrame implements ActionListener {
         String password = String.valueOf(txtPassword.getPassword());
 
         if (clicked == btnLogin) {
-            if (userName.trim().equals("admin") && password.trim().equals("admin")) {
+            if (!userName.isEmpty() && !password.isEmpty()) {
                 this.dispose();
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        new FrameMain();
-                    }
-                });
+                int check = Scheduler.loadUser(userName, password);
+
+                if(check == 1) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            new FrameMain();
+                        }
+                    });
+                } else {
+                    lbMessage.setText("Invalid Username or Password.");
+                }
+
             } else {
                 lbMessage.setText("Invalid Username or Password.");
             }

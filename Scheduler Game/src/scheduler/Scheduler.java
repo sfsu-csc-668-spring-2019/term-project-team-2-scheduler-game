@@ -28,6 +28,7 @@ public class Scheduler extends TimerTask {
     private StatsManager statsManager;
     private Notifier notifier;
     private UIManager uiManager;
+    private static User myuser;
     private ArrayList<Task> observers = new ArrayList<>();
 
 
@@ -49,19 +50,29 @@ public class Scheduler extends TimerTask {
     public static void createUser(String username, String password){
         User user = new User();
         user.createUser(username, password);
+        myuser = user;
     }
 
     public static int loadUser(String username, String password){
 
         User user = new User();
         if(user.checkLogin(username, password) == 0){
+            myuser = user;
             return 0;
         }
         else {
             return 1;
         }
-        //return new User(username, password);
 
+    }
+
+    public static  void createProject(String name, String description, int Hduration, LocalDateTime deadline){
+        Project project = myuser.getCalendar().getProjectBuilder().build(name,
+                                                                         description,
+                                                                         new ArrayList<String>(),
+                                                                         Duration.ofHours(Hduration),
+                                                                         deadline);
+        myuser.getCalendar().getProjectBuilder().buildWorkSessions(project);
     }
 
     /**

@@ -52,7 +52,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
         // Add initial components to FrameMain
         this.setLayout(new BorderLayout());
         this.add(dashboardCalendar, BorderLayout.WEST);
-        this.add(projectArray[0], BorderLayout.EAST);
+        if(projectArray[0] != null) this.add(projectArray[0], BorderLayout.EAST);
 
         // Set panel dimensions
         Dimension dim = new Dimension();

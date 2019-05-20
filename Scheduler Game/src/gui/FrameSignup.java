@@ -117,9 +117,10 @@ public class FrameSignup extends JFrame implements ActionListener {
                 Scheduler.createUser(userName, password1);
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new FrameLogin("Account successfully created!");
+                        new FrameMain();
                     }
                 });
+                this.dispose();
             }
         }
 

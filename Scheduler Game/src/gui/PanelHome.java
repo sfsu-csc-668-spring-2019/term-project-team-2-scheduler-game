@@ -7,22 +7,42 @@ import java.awt.event.ActionListener;
 
 public class PanelHome extends JPanel implements ActionListener {
 
-    private JLabel panelTitle;
-
     public PanelHome() {
 
         // Add initial components to FrameMain
-        this.setLayout(new GridLayout(20, 1));
+        this.setLayout(new GridLayout(18, 1));
+        Color bgColor = Color.decode("#EEEEEE");
 
         // Set panel header text
-        panelTitle = new JLabel("Home");
-        this.add(panelTitle, BorderLayout.CENTER);
+        JLabel lbTitle = new JLabel("Scheduler Game");
+        lbTitle.setFont(new Font("Gill Sans MT",Font.BOLD,30));
+        this.add(lbTitle);
 
-        this.add(new JLabel("Team:"));
-        this.add(new JLabel("Hasaan Javed"));
-        this.add(new JLabel("Matthieu Vilain"));
-        this.add(new JLabel("Paul Uhlenkott"));
-        this.add(new JLabel("Vinicius Miazaki"));
+        JLabel nada = new JLabel("");
+        this.add(nada);
+
+        JLabel team = new JLabel("Team:");
+        team.setFont(new Font("Gill Sans MT",Font.BOLD,22));
+
+        JLabel team1 = new JLabel("Hasaan Javed");
+        team1.setFont(new Font("Gill Sans MT",Font.PLAIN,18));
+        this.add(team);
+
+        JLabel team2 = new JLabel("Matthieu Vilain");
+        team2.setFont(new Font("Gill Sans MT",Font.PLAIN,18));
+
+        JLabel team3 = new JLabel("Paul Uhlenkott");
+        team3.setFont(new Font("Gill Sans MT",Font.PLAIN,18));
+
+        JLabel team4 = new JLabel("Vinícius Miazaki");
+        team4.setFont(new Font("Gill Sans MT",Font.PLAIN,18));
+
+        this.add(team1);
+        this.add(team2);
+        this.add(team3);
+        this.add(team4);
+
+        this.setBorder(BorderFactory.createMatteBorder(40, 60, 0, 0, bgColor));
 
         // Set panel dimensions
         Dimension dim = new Dimension();

@@ -1,6 +1,6 @@
 package gui;
 
-public interface ComponentTemplate {
+public interface TemplateComponent {
 
     // Set background, color, font
     void setHelpers();
@@ -8,7 +8,7 @@ public interface ComponentTemplate {
     // Create and set all text, labels and other elements
     void setContent();
 
-    // Set panel
+    // Set panel layout, dimensions, borders, position
     void setContainer();
 
     // Add all inner components to its parent

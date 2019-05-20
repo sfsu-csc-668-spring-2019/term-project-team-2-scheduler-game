@@ -10,7 +10,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.lang.*;
 
-public class PanelTask extends JPanel implements ActionListener, ComponentTemplate {
+public class PanelTask extends JPanel implements ActionListener, TemplateComponent {
 
     private JLabel lbName, lbDate, lbBegin, lbEnd, lbStatus;
     private JPanel buttonsPanel;
@@ -25,7 +25,7 @@ public class PanelTask extends JPanel implements ActionListener, ComponentTempla
         // Stores task
         this.task = task;
 
-        // Implements methods from ComponentTemplate interface
+        // Implements methods from TemplateComponent interface
         this.setHelpers();
         this.setContent();
         this.setContainer();

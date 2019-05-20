@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelProject extends JPanel implements ActionListener, ComponentTemplate {
+public class PanelProject extends JPanel implements ActionListener, TemplateComponent {
 
     private JLabel panelTitle;
     private int taskCount;
@@ -28,7 +28,7 @@ public class PanelProject extends JPanel implements ActionListener, ComponentTem
         this.project = project;
         this.tasks = project.getTasks();
 
-        // Implements methods from ComponentTemplate interface
+        // Implements methods from TemplateComponent interface
         this.setHelpers();
         this.setContent();
         this.setContainer();

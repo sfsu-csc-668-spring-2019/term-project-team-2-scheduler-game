@@ -3,7 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class PanelHome extends JPanel implements ComponentTemplate {
+public class PanelHome extends JPanel implements TemplateComponent {
 
     private JLabel lbTitle, nada, team, team1, team2, team3, team4;
     private Color color;
@@ -11,7 +11,7 @@ public class PanelHome extends JPanel implements ComponentTemplate {
 
     public PanelHome() {
 
-        // Implements methods from ComponentTemplate interface
+        // Implements methods from TemplateComponent interface
         setHelpers();
         setContent();
         setContainer();

@@ -10,26 +10,45 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import scheduler.Scheduler;
 
-public class FrameProject extends JFrame implements ActionListener {
+public class FrameProject extends JFrame implements ActionListener, TemplateFrame {
 
     private JPanel frameContainer, formPanel, buttonsPanel;
-    private CustomButton btnDone, btnCalcel;
-
+    private CustomButton btnDone, btnCancel;
     private JLabel lbName, lbDescription, lbTags, lbDurantion, lbDeadline, lbMessage, lbTitle;
     private JTextField txtName, txtDescription, txtTags, txtDuration, day, month, year;
     private String name, description, tags, duration, sDay, sMonth, sYear;
 
-    public FrameProject(String s) {
+    private String message;
+    private Color color;
+    private Dimension dim;
 
-        // Helpers
-        Dimension dim = new Dimension();
-        Color bgColor = Color.decode("#262a33");
+    public FrameProject(String message) {
+
+        // Stores parameter
+        this.message = message;
+
+        // Implements methods from TemplateComponent interface
+        setHelpers();
+        setForm();
+        setButtons();
+        addChildren();
+        setFrame();
+    }
+
+    @Override
+    public void setHelpers() {
+        dim = new Dimension();
+        color = Color.decode("#262a33");
+    }
+
+    @Override
+    public void setForm() {
 
         // Form (Step 1) - Create and populate the panel
         JPanel p = new JPanel(new SpringLayout());
-        p.setBackground(bgColor);
+        p.setBackground(color);
 
-        lbTitle = new JLabel(s, SwingConstants.CENTER);
+        lbTitle = new JLabel(message, SwingConstants.CENTER);
         lbTitle.setForeground(Color.WHITE);
         lbTitle.setFont(new Font("Gill Sans MT",Font.BOLD,20));
 
@@ -69,7 +88,7 @@ public class FrameProject extends JFrame implements ActionListener {
         month = new JTextField(4);
         year = new JTextField(4);
         JPanel datePanel = new JPanel(new GridLayout(1, 3));
-        datePanel.setBackground(bgColor);
+        datePanel.setBackground(color);
         datePanel.add(day);
         datePanel.add(month);
         datePanel.add(year);
@@ -80,59 +99,65 @@ public class FrameProject extends JFrame implements ActionListener {
 
         // Form (Step 3)  - Add final components
         formPanel = new JPanel(new BorderLayout());
-        formPanel.setBackground(bgColor);
+        formPanel.setBackground(color);
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 42));
         formPanel.add(p);
+    }
 
-        // Buttons
+    @Override
+    public void setButtons() {
         buttonsPanel = new JPanel(new GridLayout(3,1));
-        buttonsPanel.setBackground(bgColor);
+        buttonsPanel.setBackground(color);
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
         dim.height = 130;
         buttonsPanel.setPreferredSize(dim);
 
-        if(s == "Add Project") addProject();
+        if(message == "Add Project") addProject();
         else editProject();
 
-        Scheduler.createProject("Project23", "23", 2,LocalDateTime.of(2019, Month.MAY, 20, 00, 00, 00));
-
         btnDone.addActionListener(this);
-        btnDone.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, bgColor));
+        btnDone.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, color));
 
-        btnCalcel = new CustomButton("CANCEL", Color.decode("#434751"), Color.decode("#6D0EB5"));
-        btnCalcel.addActionListener(this);
-        btnCalcel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, bgColor));
+        btnCancel = new CustomButton("CANCEL", Color.decode("#434751"), Color.decode("#6D0EB5"));
+        btnCancel.addActionListener(this);
+        btnCancel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, color));
 
         lbMessage = new JLabel("", SwingConstants.CENTER);
         lbMessage.setForeground(Color.WHITE);
 
         buttonsPanel.add(btnDone);
-        buttonsPanel.add(btnCalcel);
+        buttonsPanel.add(btnCancel);
         buttonsPanel.add(lbMessage);
+    }
 
-        // frameContainer settings
-        frameContainer = new JPanel(new BorderLayout());
-        frameContainer.setBackground(bgColor);
-        frameContainer.add(lbTitle, BorderLayout.NORTH);
-        frameContainer.add(formPanel, BorderLayout.CENTER);
-        frameContainer.add(buttonsPanel, BorderLayout.SOUTH);
-        frameContainer.setBorder(BorderFactory.createEmptyBorder(35, 0, 0, 0));
-
-        // JFrame
+    @Override
+    public void setFrame() {
         this.setLayout(new BorderLayout());
         this.add(frameContainer, BorderLayout.CENTER);
-        this.setTitle("Scheduler Login");
+
         this.setSize(400, 450);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
+    @Override
+    public void addChildren() {
+        frameContainer = new JPanel(new BorderLayout());
+        frameContainer.setBackground(color);
+        frameContainer.add(lbTitle, BorderLayout.NORTH);
+        frameContainer.add(formPanel, BorderLayout.CENTER);
+        frameContainer.add(buttonsPanel, BorderLayout.SOUTH);
+        frameContainer.setBorder(BorderFactory.createEmptyBorder(35, 0, 0, 0));
+    }
+
     private void addProject(){
+        this.setTitle("Add Project");
         btnDone = new CustomButton("ADD PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
     }
 
     private void editProject(){
+        this.setTitle("Edit Project");
         btnDone = new CustomButton("EDIT PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
     }
 
@@ -160,7 +185,7 @@ public class FrameProject extends JFrame implements ActionListener {
                 lbMessage.setText("Name, Duration and Deadline are required!");
             }
         }
-        else if (clicked == btnCalcel) {
+        else if (clicked == btnCancel) {
             this.dispose();
         }
     }

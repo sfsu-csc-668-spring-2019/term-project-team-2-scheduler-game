@@ -143,7 +143,7 @@ public class Scheduler extends TimerTask {
 
         // Starts the GUI
         // Launches the Login frame
-        //new FrameLogin("");
-        new FrameMain();
+        new FrameLogin("");
+        //new FrameMain();
     }
 }

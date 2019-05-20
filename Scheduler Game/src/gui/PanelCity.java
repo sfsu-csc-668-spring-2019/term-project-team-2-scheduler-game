@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanelCity extends JPanel implements ActionListener, ComponentTemplate {
+public class PanelCity extends JPanel implements ActionListener, TemplateComponent {
 
     private PanelDashboard dashboardCity;
     private JLabel panelTitle;
@@ -16,7 +16,7 @@ public class PanelCity extends JPanel implements ActionListener, ComponentTempla
 
     public PanelCity() {
 
-        // Implements methods from ComponentTemplate interface
+        // Implements methods from TemplateComponent interface
         setHelpers();
         setContent();
         setContainer();

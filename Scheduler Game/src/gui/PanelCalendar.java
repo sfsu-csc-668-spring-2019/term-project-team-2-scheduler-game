@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import scheduler.Scheduler;
 import calendar.Project;
 
-public class PanelCalendar extends JPanel implements ActionListener, ComponentTemplate {
+public class PanelCalendar extends JPanel implements ActionListener, TemplateComponent {
 
     private PanelDashboard dashboardCalendar;
     private CustomButton[] btnArray = new CustomButton[12];
@@ -24,7 +24,7 @@ public class PanelCalendar extends JPanel implements ActionListener, ComponentTe
         projects = Scheduler.getProjects();
         projectCount = projects.size();
 
-        // Implements methods from ComponentTemplate interface
+        // Implements methods from TemplateComponent interface
         setHelpers();
         setContent();
         setContainer();

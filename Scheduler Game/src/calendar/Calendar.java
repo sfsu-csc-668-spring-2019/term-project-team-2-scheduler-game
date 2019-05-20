@@ -2,6 +2,7 @@ package calendar;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Calendar {
@@ -24,13 +25,42 @@ public class Calendar {
     public Boolean isFree(LocalDateTime time) {
         for(Project project : this.projects) {
             for(Task task : project.getTasks()) {
+                //System.out.println(task.getBegin());
                 Duration duration = Duration.between(task.getBegin(), time);
-                if(duration.toMinutes() < 59) {
+                if(Math.abs(duration.toMinutes()) < 59) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    private int deltaLocalDateTime(LocalDateTime t1, LocalDateTime t2) {
+        //System.out.println("T1: "+t1);
+        //System.out.println("T2: "+t2);
+        LocalDateTime tempDateTime = LocalDateTime.from(t1);
+
+        long years = tempDateTime.until(t2, ChronoUnit.YEARS);
+        tempDateTime = tempDateTime.plusYears( years );
+
+        long months = tempDateTime.until(t2, ChronoUnit.MONTHS);
+        tempDateTime = tempDateTime.plusMonths( months );
+
+        long days = tempDateTime.until(t2, ChronoUnit.DAYS);
+        tempDateTime = tempDateTime.plusDays( days );
+
+
+        long hours = tempDateTime.until(t2, ChronoUnit.HOURS);
+        tempDateTime = tempDateTime.plusHours( hours );
+
+        long minutes = tempDateTime.until(t2, ChronoUnit.MINUTES);
+        tempDateTime = tempDateTime.plusMinutes( minutes );
+
+        long seconds = tempDateTime.until(t2, ChronoUnit.SECONDS);
+
+        //System.out.println(tempDateTime);
+        return tempDateTime.getMinute();
+
     }
 
     public ArrayList<Integer> dayFreeHours(LocalDateTime day) {

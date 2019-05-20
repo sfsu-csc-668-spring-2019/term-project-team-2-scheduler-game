@@ -26,8 +26,10 @@ public class AIEngine {
         Duration taskDuration = totalDuration.dividedBy(nbTask);
         //System.out.println(taskDuration.toMinutes());
 
+
         ArrayList<LocalDateTime> sessions = this.scheduleTask(LocalDateTime.now(), project.getDeadline(), nbTask);
 
+        //System.out.println("Task scheduled");
         ArrayList<Task> tasks = new ArrayList<>();
         for(int i=0; i<nbTask; i++){
             LocalDateTime beginTask = sessions.get(i);
@@ -42,28 +44,35 @@ public class AIEngine {
 
     private ArrayList<LocalDateTime> scheduleTask(LocalDateTime begin, LocalDateTime deadline, int nbTask) {
         LocalDateTime current = begin;
+        //System.out.println("Here we go ! "+current);
         ArrayList<LocalDateTime> possibleDays = new ArrayList<>();
         while(!this.compareLocalDateTime(current, deadline)) {
             possibleDays.add(current);
             current = current.plusDays(1);
             //System.out.println(current);
         }
+        //System.out.println(possibleDays);
 
         ArrayList<LocalDateTime> selectedSchedule = new ArrayList<>();
         int firstIndex = possibleDays.size()/nbTask/2;
         int spaceBetweenDays = possibleDays.size()/nbTask;
+        //System.out.println(nbTask);
         for(int i=0; i<nbTask; i++) {
+            //System.out.println("Scheduling task"+i);
             int idx = firstIndex + i*spaceBetweenDays;
             ArrayList<Integer> freeHours = this.calendar.dayFreeHours(possibleDays.get(idx));
+            //System.out.println(freeHours);
             if(!freeHours.isEmpty()){
                 int selectedHour = this.randomGenerator.nextInt(freeHours.size()-1);
                 selectedSchedule.add(possibleDays.get(idx).withHour(selectedHour).withMinute(0).withSecond(0));
             }
             else {
-                possibleDays.set(idx, possibleDays.get(idx).minusDays(1));
+                LocalDateTime newday = possibleDays.get(idx).minusDays(1);
+                possibleDays.set(idx, newday);
                 i--;
             }
         }
+        //System.out.println("maintenant");
         return selectedSchedule;
     }
 

@@ -145,6 +145,19 @@ public class Scheduler extends TimerTask {
         Timer timer = new Timer();
         timer.schedule(scheduler, 0,60000);
 
+        // UNCOMMENT THIS PART IF YOU WANT TO CREATE MULTIPLE PROJECT AUTOMATICALY
+        /*scheduler.loadUser("Hasaan", "123");
+        scheduler.myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
+
+        scheduler.createProject("Project1",
+                                "Finish the scheduler before monday !",
+                                4,
+                                LocalDateTime.of(2019, Month.MAY, 28, 00, 00, 00));
+        scheduler.createProject("Project2",
+                "Finish the scheduler before monday !",
+                2,
+                LocalDateTime.of(2019, Month.MAY, 24, 00, 00, 00));*/
+
         // Starts the GUI
         // Launches the Login frame
         //new FrameLogin("");

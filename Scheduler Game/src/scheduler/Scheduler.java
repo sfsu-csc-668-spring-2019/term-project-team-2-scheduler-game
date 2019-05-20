@@ -1,5 +1,6 @@
 package scheduler;
 
+import gui.PanelProject;
 import org.json.simple.*;
 import java.io.FileReader;
 import java.io.IOException;
@@ -130,7 +131,7 @@ public class Scheduler extends TimerTask {
         timer.schedule(scheduler, 0,60000);
 
         // Create test user
-        scheduler.loadUser("Hasaan", "123");
+        /*scheduler.loadUser("Hasaan", "123");
         scheduler.myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
 
         // Create test project
@@ -139,7 +140,7 @@ public class Scheduler extends TimerTask {
         String jsonTask = scheduler.myuser.getCalendar().getProjects().get(0).toJSON();
         System.out.println(jsonTask);
 
-        scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);
+        scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);*/
 
         // Starts the GUI
         // Launches the Login frame

@@ -80,7 +80,7 @@ public class FrameProject extends JFrame implements ActionListener, TemplateFram
         lbDurantion.setLabelFor(txtDuration);
         p.add(txtDuration);
 
-        lbDeadline = new JLabel("Deadline: ", JLabel.TRAILING);
+        lbDeadline = new JLabel("Deadline (M/D/Y): ", JLabel.TRAILING);
         lbDeadline.setForeground(Color.WHITE);
         p.add(lbDeadline);
 
@@ -89,8 +89,8 @@ public class FrameProject extends JFrame implements ActionListener, TemplateFram
         year = new JTextField(4);
         JPanel datePanel = new JPanel(new GridLayout(1, 3));
         datePanel.setBackground(color);
-        datePanel.add(day);
         datePanel.add(month);
+        datePanel.add(day);
         datePanel.add(year);
         p.add(datePanel);
 

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelProject extends JPanel implements ActionListener, TemplateComponent {
+public class PanelProject extends JPanel implements TemplateComponent {
 
     private JLabel panelTitle;
     private int taskCount;
@@ -73,11 +73,6 @@ public class PanelProject extends JPanel implements ActionListener, TemplateComp
         this.add(panelTitle, BorderLayout.NORTH);
         this.add(tasksContainer, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 
 }

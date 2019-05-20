@@ -15,8 +15,8 @@ public class City {
     private EventManager eventManager;
 
 
-    public City(int cityID){
-        this.cityID = cityID;
+    public City(){
+        //this.cityID = cityID;
         budget = new Money(0);
         buildings = new ArrayList<>();
         exp = 0;
@@ -59,15 +59,15 @@ public class City {
         streak--;
     }
 
-    private void modifyEvents(float modifier){
+    protected void modifyEvents(float modifier){
         eventManager.modifyIncrease(modifier);
     }
 
-    private void modifyIncome(float modifier){
+    protected void modifyIncome(float modifier){
         budget.modifyIncome(modifier);
     }
 
-    private void modifyExperience(float modifier){
+    protected void modifyExperience(float modifier){
         expRate = (expRate * (1 + modifier));
     }
 

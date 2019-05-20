@@ -17,6 +17,7 @@ public class Calendar {
     public void addProject(String name, String description, ArrayList<String> tags, Duration duration, LocalDateTime deadline){
         this.projectBuilder.setContext(this.projects);
         Project project = this.projectBuilder.build(name, description, tags, duration, deadline);
+        this.projectBuilder.buildWorkSessions(project);
         this.projects.add(project);
     }
 

@@ -1,6 +1,7 @@
 package calendar;
 
 import gui.NotificationFrame;
+import org.json.simple.JSONObject;
 import scheduler.Scheduler;
 
 import java.time.Duration;
@@ -15,13 +16,14 @@ public class Task {
     private LocalDateTime begin;
     private LocalDateTime end;
     private int status;         //0:todoo, 1:in-progress, 2:Done, 3:Not-finish
-    private String projectName = "Project1"; // TODO: 12/05/19
+    private String projectName; // TODO: 12/05/19
     private String description;
     private HashMap<String, Boolean> todoList;
     private float productivity;
 
-    public Task(LocalDateTime begin, Duration duration) {
+    public Task(String projectName, LocalDateTime begin, Duration duration) {
         this.id = UUID.randomUUID().toString();
+        this.projectName = projectName;
         this.begin = begin;
         this.duration = duration;
         this.end = this.begin.plusMinutes(this.duration.toMinutes());
@@ -110,11 +112,46 @@ public class Task {
         return projectName;
     }
 
+    public void setId(String id) { this.id = id; }
+
+    public void setEnd(LocalDateTime end) { this.end = end; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public void setTodoList(HashMap<String, Boolean> todoList) { this.todoList = todoList; }
+
     public String toString(){
         String str = "";
         str += "id: " + this.id + "\n";
         str += "Begin: " + this.begin + "\tEnd: " + this.end +  "\tDuration: " + this.duration + "\n";
         str += "Status: " + this.status ;
         return str;
+    }
+
+    public JSONObject toJSON(){
+        /*String str = "{";
+        str += '"'+ this.id+"\":{";
+            str += "\"ProjectName\": "+ this.projectName + ",";
+            str += "\"Status\": "+ this.status + ",";
+            str += "\"Duration\": "+ this.duration.toHours() + ",";
+            str += "\"Description\": "+ this.description + ",";
+            str += "\"Productivity\": "+ this.productivity + ",";
+            str += "\"BeginTime\": "+ this.begin + ",";
+            str += "\"EndTime\": "+ this.end ;
+        str += "}";
+
+        //System.out.println(str+"}");
+        return str+"}";*/
+        JSONObject taskDetails = new JSONObject();
+        taskDetails.put("Id", this.id);
+        taskDetails.put("ProjectName", this.projectName);
+        taskDetails.put("Status", Integer.toString(this.status));
+        taskDetails.put("Duration", Long.toString(this.duration.toHours()));
+        taskDetails.put("Description", this.description);
+        taskDetails.put("Productivity", Float.toString(this.productivity));
+        taskDetails.put("BeginTime", this.begin.toString());
+        taskDetails.put("EndTime", this.end.toString());
+
+        return taskDetails;
     }
 }

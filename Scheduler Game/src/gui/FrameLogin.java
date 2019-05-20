@@ -1,5 +1,7 @@
 package gui;
 
+import scheduler.Scheduler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,16 +16,14 @@ public class FrameLogin extends JFrame implements ActionListener {
     private JPasswordField txtPassword;
     private CustomButton btnLogin, btnSignup;
 
-
     public FrameLogin(String s) {
-
 
         // Helpers
         Dimension dim = new Dimension();
         Color bgColor = Color.decode("#262a33");
 
         // Logo
-        logoPanel = new CustomImage(new ImageIcon("images/logo-login.png").getImage());
+        logoPanel = new CustomImage(new ImageIcon("src/images/logo-login.png").getImage());
 
         // Form (Step 1) - Create and populate the panel
         JPanel p = new JPanel(new SpringLayout());
@@ -36,9 +36,7 @@ public class FrameLogin extends JFrame implements ActionListener {
         lbUsername.setLabelFor(txtUsername);
         p.add(txtUsername);
 
-
         lbPassword = new JLabel("Password: ", JLabel.TRAILING);
-
         lbPassword.setForeground(Color.WHITE);
         p.add(lbPassword);
         txtPassword = new JPasswordField(20);
@@ -69,9 +67,7 @@ public class FrameLogin extends JFrame implements ActionListener {
         btnSignup.addActionListener(this);
         btnSignup.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, bgColor));
 
-
         lbMessage = new JLabel(s, SwingConstants.CENTER);
-
         lbMessage.setForeground(Color.WHITE);
 
         buttonsPanel.add(btnLogin);
@@ -104,13 +100,20 @@ public class FrameLogin extends JFrame implements ActionListener {
         String password = String.valueOf(txtPassword.getPassword());
 
         if (clicked == btnLogin) {
-            if (userName.trim().equals("admin") && password.trim().equals("admin")) {
+            if (!userName.isEmpty() && !password.isEmpty()) {
                 this.dispose();
-                SwingUtilities.invokeLater(new Runnable() {
-                    public void run() {
-                        new FrameMain();
-                    }
-                });
+                int check = Scheduler.loadUser(userName, password);
+
+                if(check == 1) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            new FrameMain();
+                        }
+                    });
+                } else {
+                    lbMessage.setText("Invalid Username or Password.");
+                }
+
             } else {
                 lbMessage.setText("Invalid Username or Password.");
             }

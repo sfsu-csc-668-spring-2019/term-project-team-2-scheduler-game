@@ -4,33 +4,47 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 
 public class PanelCalendar extends JPanel implements ActionListener {
 
     private PanelDashboard dashboardCalendar;
-    private CustomButton btn1, btn2, btn3, btn4;
-    private JPanel p1, p2, p3, p4;
-    private JLabel panelTitle;
+    private CustomButton[] btnArray = new CustomButton[12];
+    private PanelProject[] projectArray = new PanelProject[10];
+    private int projectCount;
 
     public PanelCalendar() {
 
+        // @TODO - Replace 3 with a getProjectsCount()
+        projectCount = 3; //PLACEHOLDER
+
+        // @TODO - Delete lines below
+        String[] projects = new String[10]; //PLACEHOLDER
+        projects[0] = "Project 1"; //PLACEHOLDER
+        projects[1] = "Project 2"; //PLACEHOLDER
+        projects[2] = "Project 3"; //PLACEHOLDER
+
         // Create the main panels that will have the main content
-        dashboardCalendar = new PanelDashboard("images/logo-calendar.png", 4);
-        p1 = new JPanel();
-        p2 = new JPanel();
-        p4 = new JPanel();
+        dashboardCalendar = new PanelDashboard("src/images/logo-calendar.png", 12);
+        for(int i=0; i<10; i++) {
+            projectArray[i] = new PanelProject(i);
+        }
 
         // Create the dashboard button for each of the main panels
-        btn1 = dashboardCalendar.newDashButton("One");
-        btn2 = dashboardCalendar.newDashButton("Two");
-        btn3 = dashboardCalendar.newDashButton("Three");
-        btn4 = dashboardCalendar.newDashButton("Four");
+        for(int i=0; i<projectCount; i++) {
+            btnArray[i] = dashboardCalendar.newDashButton(projects[i]);
+            btnArray[i].addActionListener(this);
+        }
 
-        // Add action listeners to all buttons
-        btn1.addActionListener(this);
-        btn2.addActionListener(this);
-        btn3.addActionListener(this);
-        btn4.addActionListener(this);
+        // Create all the other empty buttons
+        for(int i=projectCount; i<10; i++) {
+            btnArray[i] = dashboardCalendar.newDashButton("");
+        }
+
+        // Add last button
+        btnArray[10] = dashboardCalendar.newDashButton("Add New Project");
+        btnArray[10].addActionListener(this);
+        btnArray[11] = dashboardCalendar.newDashButton("");
 
         // Set dashboard style
         Color dashboardBg = Color.decode("#262A34");
@@ -39,11 +53,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
         // Add initial components to FrameMain
         this.setLayout(new BorderLayout());
         this.add(dashboardCalendar, BorderLayout.WEST);
-        this.add(p1, BorderLayout.EAST);
-
-        // Set panel header text
-        panelTitle = new JLabel("Calendar");
-        this.add(panelTitle, BorderLayout.CENTER);
+        this.add(projectArray[0], BorderLayout.EAST);
 
         // Set panel dimensions
         Dimension dim = new Dimension();
@@ -55,17 +65,25 @@ public class PanelCalendar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton)e.getSource();
 
-        if (clicked == btn1) {
-            this.panelTitle.setText("Calendar - ONE");
+        // Reset panels
+        for(int i=0; i<10; i++) {
+            this.remove(projectArray[i]);
         }
-        else if (clicked == btn2) {
-            this.panelTitle.setText("Calendar - TWO");
+
+        // Display only the correct panel
+        for(int i=0; i<10; i++) {
+            if (clicked == btnArray[i]) {
+                this.add(projectArray[i], BorderLayout.EAST);
+                break;
+            }
         }
-        else if (clicked == btn3) {
-            this.panelTitle.setText("Calendar - THREE");
-        }
-        else if (clicked == btn4) {
-            this.panelTitle.setText("Calendar - FOUR");
+
+        if (clicked == btnArray[10]) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    new FrameProject("Add Project");
+                }
+            });
         }
 
         this.revalidate();

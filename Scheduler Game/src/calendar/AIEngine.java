@@ -24,18 +24,18 @@ public class AIEngine {
         Duration totalDuration = project.getDuration();
         int nbTask = (int)totalDuration.toHours();
         Duration taskDuration = totalDuration.dividedBy(nbTask);
-        System.out.println(taskDuration.toMinutes());
+        //System.out.println(taskDuration.toMinutes());
 
         ArrayList<LocalDateTime> sessions = this.scheduleTask(LocalDateTime.now(), project.getDeadline(), nbTask);
 
         ArrayList<Task> tasks = new ArrayList<>();
         for(int i=0; i<nbTask; i++){
             LocalDateTime beginTask = sessions.get(i);
-            Task task = new Task(beginTask, taskDuration);
-            System.out.println(this.scheduler);
+            Task task = new Task(project.getName(), beginTask, taskDuration);
+            //System.out.println(this.scheduler);
             this.scheduler.registerObserver(task);
             tasks.add(task);
-            System.out.println(task.toString());
+            //System.out.println(task.toString());
         }
         project.setTasks(tasks);
     }
@@ -46,7 +46,7 @@ public class AIEngine {
         while(!this.compareLocalDateTime(current, deadline)) {
             possibleDays.add(current);
             current = current.plusDays(1);
-            System.out.println(current);
+            //System.out.println(current);
         }
 
         ArrayList<LocalDateTime> selectedSchedule = new ArrayList<>();

@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.Month;
+import scheduler.Scheduler;
 
 public class FrameProject extends JFrame implements ActionListener {
 
@@ -13,8 +16,8 @@ public class FrameProject extends JFrame implements ActionListener {
     private CustomButton btnDone, btnCalcel;
 
     private JLabel lbName, lbDescription, lbTags, lbDurantion, lbDeadline, lbMessage, lbTitle;
-    private JTextField txtName, txtDescription, txtTags, txtDuration, txtDeadline;
-    private String name, description, tags, duration, deadline;
+    private JTextField txtName, txtDescription, txtTags, txtDuration, day, month, year;
+    private String name, description, tags, duration, sDay, sMonth, sYear;
 
     public FrameProject(String s) {
 
@@ -61,9 +64,16 @@ public class FrameProject extends JFrame implements ActionListener {
         lbDeadline = new JLabel("Deadline: ", JLabel.TRAILING);
         lbDeadline.setForeground(Color.WHITE);
         p.add(lbDeadline);
-        txtDeadline = new JTextField(100);
-        lbDeadline.setLabelFor(txtDeadline);
-        p.add(txtDeadline);
+
+        day = new JTextField(4);
+        month = new JTextField(4);
+        year = new JTextField(4);
+        JPanel datePanel = new JPanel(new GridLayout(1, 3));
+        datePanel.setBackground(bgColor);
+        datePanel.add(day);
+        datePanel.add(month);
+        datePanel.add(year);
+        p.add(datePanel);
 
         // Form (Step 2)  - Lay out the panel
         CustomForm.makeCompactGrid(p, 5 , 2, 60, 0, 5, 10);
@@ -81,8 +91,11 @@ public class FrameProject extends JFrame implements ActionListener {
         dim.height = 130;
         buttonsPanel.setPreferredSize(dim);
 
-        if(s == "Add Project") btnDone = new CustomButton("ADD PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
-        else btnDone = new CustomButton("EDIT PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
+        if(s == "Add Project") addProject();
+        else editProject();
+
+        Scheduler.createProject("Project23", "23", 2,LocalDateTime.of(2019, Month.MAY, 20, 00, 00, 00));
+
         btnDone.addActionListener(this);
         btnDone.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, bgColor));
 
@@ -115,6 +128,14 @@ public class FrameProject extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    private void addProject(){
+        btnDone = new CustomButton("ADD PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
+    }
+
+    private void editProject(){
+        btnDone = new CustomButton("EDIT PROJECT", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton)e.getSource();
@@ -123,15 +144,18 @@ public class FrameProject extends JFrame implements ActionListener {
         description = txtDescription.getText();
         tags = txtTags.getText();
         duration = txtDuration.getText();
-        deadline = txtDeadline.getText();
+        sDay = day.getText();
+        sMonth = month.getText();
+        sYear = year.getText();
 
         if (clicked == btnDone) {
-            if (!name.isEmpty() && !duration.isEmpty() & !!deadline.isEmpty()) {
+            if (!name.isEmpty() && !duration.isEmpty() & !sDay.isEmpty() & !sMonth.isEmpty() & !sYear.isEmpty()) {
+                Scheduler.createProject(
+                        name,
+                        description,
+                        Integer.parseInt(duration),
+                        LocalDateTime.of(Integer.parseInt(sYear), Month.of(Integer.parseInt(sMonth)), Integer.parseInt(sDay), 00, 00, 00));
                 this.dispose();
-
-                //TODO - Call the method to create the project here. Something like:
-                //new ProjectBuilder(name, description, tags, duration, deadline);
-
             } else {
                 lbMessage.setText("Name, Duration and Deadline are required!");
             }

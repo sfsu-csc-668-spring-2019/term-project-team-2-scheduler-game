@@ -53,8 +53,13 @@ public class Scheduler extends TimerTask {
         }
     }
 
-    public static  void createProject(String name, String description, int Hduration, LocalDateTime deadline){
-        myuser.getCalendar().addProject(name, description, new ArrayList<String>(), Duration.ofHours(Hduration), deadline);
+    public static void createProject(String name, String description, int Hduration, LocalDateTime deadline) {
+        myuser.getCalendar().addProject(
+                name,
+                description,
+                new ArrayList<String>(),
+                Duration.ofHours(Hduration),
+                deadline);
     }
 
     public static ArrayList<Project> getProjects(){
@@ -125,7 +130,7 @@ public class Scheduler extends TimerTask {
         timer.schedule(scheduler, 0,60000);
 
         // Create test user
-        /*scheduler.loadUser("Hasaan", "123");
+        scheduler.loadUser("Hasaan", "123");
         scheduler.myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
 
         // Create test project
@@ -134,11 +139,11 @@ public class Scheduler extends TimerTask {
         String jsonTask = scheduler.myuser.getCalendar().getProjects().get(0).toJSON();
         System.out.println(jsonTask);
 
-        scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);*/
+        scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);
 
         // Starts the GUI
         // Launches the Login frame
-        new FrameLogin("");
-        //new FrameMain();
+        //new FrameLogin("");
+        new FrameMain();
     }
 }

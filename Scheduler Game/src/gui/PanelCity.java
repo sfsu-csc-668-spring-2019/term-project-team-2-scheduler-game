@@ -5,14 +5,35 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanelCity extends JPanel implements ActionListener {
+public class PanelCity extends JPanel implements ActionListener, ComponentTemplate {
 
     private PanelDashboard dashboardCity;
     private JLabel panelTitle;
     private JPanel[] panelArray = new JPanel[12];
     private CustomButton[] btnArray = new CustomButton[12];
+    private Color color;
+    private Dimension dim;
 
     public PanelCity() {
+
+        // Implements methods from ComponentTemplate interface
+        setHelpers();
+        setContent();
+        setContainer();
+        addChild();
+    }
+
+    @Override
+    public void setHelpers() {
+        this.dim = new Dimension();
+        this.color = Color.decode("#262A34");
+    }
+
+    @Override
+    public void setContent() {
+
+        // Set panel header text
+        panelTitle = new JLabel("City");
 
         // Create the main panels that will have the main content
         dashboardCity = new PanelDashboard("Scheduler Game/src/images/logo-city.png", 4);
@@ -36,23 +57,21 @@ public class PanelCity extends JPanel implements ActionListener {
             btnArray[i] = dashboardCity.newDashButton("");
         }
 
-        // Set dashboard style
-        Color dashboardBg = Color.decode("#262A34");
-        dashboardCity.setBackground(dashboardBg);
+        dashboardCity.setBackground(color);
+    }
 
-        // Add initial components to FrameMain
-        this.setLayout(new BorderLayout());
-        this.add(dashboardCity, BorderLayout.WEST);
-        this.add(panelArray[0], BorderLayout.EAST);
-
-        // Set panel header text
-        panelTitle = new JLabel("City");
-        this.add(panelTitle, BorderLayout.CENTER);
-
-        // Set panel dimensions
-        Dimension dim = new Dimension();
+    @Override
+    public void setContainer() {
         dim.width = 600;
         this.setPreferredSize(dim);
+        this.setLayout(new BorderLayout());
+    }
+
+    @Override
+    public void addChild() {
+        this.add(dashboardCity, BorderLayout.WEST);
+        this.add(panelArray[0], BorderLayout.EAST);
+        this.add(panelTitle, BorderLayout.CENTER);
     }
 
     @Override

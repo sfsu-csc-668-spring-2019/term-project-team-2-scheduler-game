@@ -9,19 +9,13 @@ import java.time.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.lang.*;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
-public class PanelTask extends JPanel implements ActionListener, ComponentProject {
+public class PanelTask extends JPanel implements ActionListener, ComponentTemplate {
 
     private JLabel lbName, lbDate, lbBegin, lbEnd, lbStatus;
     private JPanel buttonsPanel;
     private CustomButton btnEdit, btnCancel;
-    private int taskID;
-
     private Task task;
-
     private Font font;
     private Dimension dim;
     private Color color;
@@ -31,22 +25,22 @@ public class PanelTask extends JPanel implements ActionListener, ComponentProjec
         // Stores task
         this.task = task;
 
-        // Implements methods from ComponentProject interface
-        this.setHelpersDetails();
-        this.setLabelsAndContent();
-        this.setContainerPanel();
-        this.addChildComponents();
+        // Implements methods from ComponentTemplate interface
+        this.setHelpers();
+        this.setContent();
+        this.setContainer();
+        this.addChild();
     }
 
     @Override
-    public void setHelpersDetails() {
+    public void setHelpers() {
         this.font = new Font("Gill Sans MT",Font.BOLD,15);
         this.dim = new Dimension();
         this.color = Color.decode("#262a33");
     }
 
     @Override
-    public void setLabelsAndContent() {
+    public void setContent() {
 
         // Task title
         lbName = new JLabel("TASK");
@@ -77,14 +71,14 @@ public class PanelTask extends JPanel implements ActionListener, ComponentProjec
     }
 
     @Override
-    public void setContainerPanel() {
+    public void setContainer() {
         this.dim.width = 300;
         this.setPreferredSize(this.dim);
         this.setLayout(new GridLayout(6, 1));
     }
 
     @Override
-    public void addChildComponents() {
+    public void addChild() {
 
         // Buttons
         buttonsPanel = new JPanel(new GridLayout(1,2));

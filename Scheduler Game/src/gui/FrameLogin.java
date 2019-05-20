@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class FrameLogin extends JFrame implements ActionListener {
+public class FrameLogin extends JFrame implements ActionListener, ComponentTemplate {
 
     private JPanel frameContainer, formPanel, buttonsPanel;
     private CustomImage logoPanel;
@@ -90,6 +90,26 @@ public class FrameLogin extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    @Override
+    public void setHelpers() {
+
+    }
+
+    @Override
+    public void setContent() {
+
+    }
+
+    @Override
+    public void setContainer() {
+
+    }
+
+    @Override
+    public void addChild() {
+
     }
 
     @Override

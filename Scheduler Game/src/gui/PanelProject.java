@@ -2,7 +2,6 @@ package gui;
 
 import calendar.Project;
 import calendar.Task;
-import scheduler.Scheduler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class PanelProject extends JPanel implements ActionListener, ComponentProject {
+public class PanelProject extends JPanel implements ActionListener, ComponentTemplate {
 
     private JLabel panelTitle;
     private int taskCount;
@@ -29,21 +28,21 @@ public class PanelProject extends JPanel implements ActionListener, ComponentPro
         this.project = project;
         this.tasks = project.getTasks();
 
-        // Implements methods from ComponentProject interface
-        this.setHelpersDetails();
-        this.setLabelsAndContent();
-        this.setContainerPanel();
-        this.addChildComponents();
+        // Implements methods from ComponentTemplate interface
+        this.setHelpers();
+        this.setContent();
+        this.setContainer();
+        this.addChild();
     }
 
     @Override
-    public void setHelpersDetails() {
+    public void setHelpers() {
         this.font = new Font("Gill Sans MT",Font.BOLD,18);
         this.dim = new Dimension();
     }
 
     @Override
-    public void setLabelsAndContent() {
+    public void setContent() {
 
         // Panel with project title
         panelTitle = new JLabel(project.getName(), SwingConstants.CENTER);
@@ -63,14 +62,14 @@ public class PanelProject extends JPanel implements ActionListener, ComponentPro
     }
 
     @Override
-    public void setContainerPanel() {
+    public void setContainer() {
         this.dim.width = 600;
         this.setPreferredSize(this.dim);
         this.setLayout(new BorderLayout());
     }
 
     @Override
-    public void addChildComponents() {
+    public void addChild() {
         this.add(panelTitle, BorderLayout.NORTH);
         this.add(tasksContainer, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));

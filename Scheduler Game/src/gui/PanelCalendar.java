@@ -9,19 +9,35 @@ import java.util.ArrayList;
 import scheduler.Scheduler;
 import calendar.Project;
 
-public class PanelCalendar extends JPanel implements ActionListener {
+public class PanelCalendar extends JPanel implements ActionListener, ComponentTemplate {
 
     private PanelDashboard dashboardCalendar;
     private CustomButton[] btnArray = new CustomButton[12];
     private PanelProject[] projectArray = new PanelProject[10];
     private int projectCount;
     private ArrayList<Project> projects;
+    private Dimension dim;
 
     public PanelCalendar() {
 
         // Get all projects
         projects = Scheduler.getProjects();
         projectCount = projects.size();
+
+        // Implements methods from ComponentTemplate interface
+        setHelpers();
+        setContent();
+        setContainer();
+        addChild();
+    }
+
+    @Override
+    public void setHelpers() {
+        this.dim = new Dimension();
+    }
+
+    @Override
+    public void setContent() {
 
         // Create the main panels that will have the main content
         dashboardCalendar = new PanelDashboard("Scheduler Game/src/images/logo-calendar.png", 12);
@@ -48,16 +64,19 @@ public class PanelCalendar extends JPanel implements ActionListener {
         // Set dashboard style
         Color dashboardBg = Color.decode("#262A34");
         dashboardCalendar.setBackground(dashboardBg);
+    }
 
-        // Add initial components to FrameMain
-        this.setLayout(new BorderLayout());
-        this.add(dashboardCalendar, BorderLayout.WEST);
-        if(projectArray[0] != null) this.add(projectArray[0], BorderLayout.EAST);
-
-        // Set panel dimensions
-        Dimension dim = new Dimension();
+    @Override
+    public void setContainer() {
         dim.width = 600;
         this.setPreferredSize(dim);
+        this.setLayout(new BorderLayout());
+    }
+
+    @Override
+    public void addChild() {
+        this.add(dashboardCalendar, BorderLayout.WEST);
+        if(projectArray[0] != null) this.add(projectArray[0], BorderLayout.EAST);
     }
 
     @Override

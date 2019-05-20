@@ -101,15 +101,16 @@ public class FrameLogin extends JFrame implements ActionListener {
 
         if (clicked == btnLogin) {
             if (!userName.isEmpty() && !password.isEmpty()) {
-                this.dispose();
+
                 int check = Scheduler.loadUser(userName, password);
 
-                if(check == 1) {
+                if(check == 0) {
                     SwingUtilities.invokeLater(new Runnable() {
                         public void run() {
                             new FrameMain();
                         }
                     });
+                    this.dispose();
                 } else {
                     lbMessage.setText("Invalid Username or Password.");
                 }

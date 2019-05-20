@@ -1,9 +1,14 @@
 package gui;
 
+import calendar.Project;
+import calendar.Task;
+import scheduler.Scheduler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PanelProject extends JPanel implements ActionListener, ComponentProject {
 
@@ -11,15 +16,18 @@ public class PanelProject extends JPanel implements ActionListener, ComponentPro
     private int taskCount;
     private PanelTask[] taskArray = new PanelTask[6];
     private JPanel tasksContainer;
-    private int projectID;
+
+    private Project project;
+    private ArrayList<Task> tasks;
 
     private Font font;
     private Dimension dim;
 
-    public PanelProject(int projectID) {
+    public PanelProject(Project project) {
 
-        // Stores project ID
-        this.projectID = projectID;
+        // Stores project
+        this.project = project;
+        this.tasks = project.getTasks();
 
         // Implements methods from ComponentProject interface
         this.setHelpersDetails();
@@ -38,17 +46,17 @@ public class PanelProject extends JPanel implements ActionListener, ComponentPro
     public void setLabelsAndContent() {
 
         // Panel with project title
-        panelTitle = new JLabel("Project " + (projectID+1), SwingConstants.CENTER);
+        panelTitle = new JLabel(project.getName(), SwingConstants.CENTER);
         panelTitle.setFont(this.font);
         panelTitle.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        // @TODO - Get tasks count from project
-        taskCount = 6;
+        // Get tasks count from project
+        taskCount = project.getTasks().size();
 
         // Get all tasks from project
         tasksContainer = new JPanel(new GridLayout(3, 2));
         for(int i=0; i<taskCount; i++) {
-            taskArray[i] = new PanelTask(i);
+            taskArray[i] = new PanelTask(tasks.get(i));
             taskArray[i].setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
             tasksContainer.add(taskArray[i]);
         }

@@ -1,6 +1,7 @@
 package scheduler;
 
-import com.sun.xml.internal.bind.v2.TODO;
+import city.City;
+//import com.sun.xml.internal.bind.v2.TODO;
 import gui.PanelProject;
 import org.json.simple.*;
 import java.io.FileReader;
@@ -104,6 +105,10 @@ public class Scheduler extends TimerTask {
 
     public void unregisterObserver(Task task){
         this.observers.remove(task);
+    }
+
+    public static City getUserCity(){
+        return myuser.getCity();
     }
 
     public void notifyObserver(){

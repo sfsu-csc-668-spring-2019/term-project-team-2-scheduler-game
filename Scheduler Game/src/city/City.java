@@ -104,4 +104,13 @@ public class City {
         }
     }
 
+    public String toString(){
+        StringBuilder cityString = new StringBuilder();
+        cityString.append("Budget: " + budget.toString());
+        cityString.append("\n");
+        cityString.append(" Level: " + lvl + "\n Exp: " + exp + "/" + expGoal);
+
+
+        return cityString.toString();
+    }
 }

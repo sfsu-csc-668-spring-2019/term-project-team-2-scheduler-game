@@ -16,4 +16,9 @@ public class Money {
     public void modifyIncome(float modifier){
         income = income * (1 + modifier);
     }
+
+    public String toString(){
+        String moneyString = Float.toString(amt);
+        return moneyString;
+    }
 }

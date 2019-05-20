@@ -31,10 +31,10 @@ public class FrameMain extends JFrame implements ActionListener {
         dashboardIcons.setBackground(dashboardBg);
 
         // Set paths for all icons
-        iconHome     = "src/images/icon-home.png";
-        iconCalendar = "src/images/icon-calendar.png";
-        iconCity     = "src/images/icon-city.png";
-        iconLogout   = "src/images/icon-logout.png";
+        iconHome     = "Scheduler Game/src/images/icon-home.png";
+        iconCalendar = "Scheduler Game/src/images/icon-calendar.png";
+        iconCity     = "Scheduler Game/src/images/icon-city.png";
+        iconLogout   = "Scheduler Game/src/images/icon-logout.png";
 
         // Create the dashboard button for each of the main panels
         Color btnHover = Color.decode("#262A34");

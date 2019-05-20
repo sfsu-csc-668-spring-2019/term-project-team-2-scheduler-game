@@ -15,10 +15,10 @@ public class PanelCity extends JPanel implements ActionListener {
     public PanelCity() {
 
         // Create the main panels that will have the main content
-        dashboardCity = new PanelDashboard("src/images/logo-city.png", 4);
+        dashboardCity = new PanelDashboard("Scheduler Game/src/images/logo-city.png", 4);
 
         // Create the main panels that will have the main content
-        dashboardCity = new PanelDashboard("src/images/logo-city.png", 12);
+        dashboardCity = new PanelDashboard("Scheduler Game/src/images/logo-city.png", 12);
         for(int i=0; i<12; i++) {
             panelArray[i] = new JPanel();
         }

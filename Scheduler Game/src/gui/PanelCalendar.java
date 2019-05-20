@@ -24,7 +24,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
         projectCount = projects.size();
 
         // Create the main panels that will have the main content
-        dashboardCalendar = new PanelDashboard("src/images/logo-calendar.png", 12);
+        dashboardCalendar = new PanelDashboard("Scheduler Game/src/images/logo-calendar.png", 12);
         for(int i=0; i<projectCount; i++) {
             projectArray[i] = new PanelProject(projects.get(i));
         }

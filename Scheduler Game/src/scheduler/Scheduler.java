@@ -4,14 +4,12 @@ import org.json.simple.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.FileWriter;
 import org.json.simple.parser.*;
 import calendar.Project;
 import calendar.Task;
 import gui.FrameMain;
 import gui.NotificationFrame;
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,29 +22,19 @@ import gui.FrameLogin;
 public class Scheduler extends TimerTask {
 
     private int status;
-
-    //private User user = new User();
     private StatsManager statsManager;
     private Notifier notifier;
     private UIManager uiManager;
     private static User myuser;
     private ArrayList<Task> observers = new ArrayList<>();
 
-
-
     public Scheduler(){
-
         System.out.println("RUNNING SCHEDULER");
-
         this.status = 0;
-
         this.statsManager = new StatsManager();
         this.notifier = new Notifier();
         this.uiManager = new UIManager();
-
-
     }
-
 
     public static void createUser(String username, String password){
         User user = new User();
@@ -55,7 +43,6 @@ public class Scheduler extends TimerTask {
     }
 
     public static int loadUser(String username, String password){
-
         User user = new User();
         if(user.checkLogin(username, password) == 0){
             myuser = user;
@@ -64,7 +51,6 @@ public class Scheduler extends TimerTask {
         else {
             return 1;
         }
-
     }
 
     public static  void createProject(String name, String description, int Hduration, LocalDateTime deadline){
@@ -103,7 +89,6 @@ public class Scheduler extends TimerTask {
         }
     }
 
-
     /**
      * Executed when a task is updated
      * @param task
@@ -126,77 +111,33 @@ public class Scheduler extends TimerTask {
         JSONParser parser = new JSONParser();
 
         try (Reader reader = new FileReader("database.json")) {
-
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             System.out.println(jsonObject);
-
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-
-        //main scheduler declaration
-        //use methods to change the values inside this
+        // Main scheduler declaration
         Scheduler scheduler = new Scheduler();
-        //run scheduler.run() in a other thread every minute
         Timer timer = new Timer();
         timer.schedule(scheduler, 0,60000);
 
-        // UNCOMMENT THIS PART IF YOU WANT TO CREATE MULTIPLE PROJECT AUTOMATICALY
-        /*scheduler.loadUser("Hasaan", "123");
+        // Create test user
+        scheduler.loadUser("Hasaan", "123");
         scheduler.myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
 
-        scheduler.createProject("Project1",
-                                "Finish the scheduler before monday !",
-                                4,
-                                LocalDateTime.of(2019, Month.MAY, 28, 00, 00, 00));
-        scheduler.createProject("Project2",
-                "Finish the scheduler before monday !",
-                2,
-                LocalDateTime.of(2019, Month.MAY, 24, 00, 00, 00));*/
+        // Create test project
+        scheduler.createProject("Project1", "Finish the scheduler before monday !", 4, LocalDateTime.of(2019, Month.MAY, 28, 00, 00, 00));
+        String jsonTask = scheduler.myuser.getCalendar().getProjects().get(0).toJSON();
+        System.out.println(jsonTask);
+
+        scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);
 
         // Starts the GUI
         // Launches the Login frame
         //new FrameLogin("");
         new FrameMain();
-
-
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~REMOVE THE STATEMENT BELOW THIS IF YOU WANT THE ENTIRE PROGRAM TO RUN~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        /*System.exit(1);
-
-        Timer t1 = new Timer();
-        t1.schedule(scheduler, 0,60000);
-
-
-        System.out.println("Schedueler is running...");
-
-        new FrameLogin("");
-
-
-        System.out.println("Schedueler is running...");
-
-        Project project = scheduler.user.getCalendar().getProjectBuilder().build("Project1",
-                "description of the project",
-                new ArrayList<String>(),
-                Duration.ofHours(2),
-
-                LocalDateTime.of(2019, Month.MAY, 10, 00, 00, 00));
-        scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
-
-
-        //Left as result of merge conflict. If causing problems please delete
-        LocalDateTime.of(2019, Month.MAY, 25, 00, 00, 00);
-        scheduler.user.getCalendar().getProjectBuilder().buildWorkSessions(project);
-        project.getTasks().get(0).setStatus(1);
-
-        FrameMain mf = new FrameMain();
-        NotificationFrame nf = new NotificationFrame(project.getTasks().get(0));*/
-
     }
-
-
-
 }

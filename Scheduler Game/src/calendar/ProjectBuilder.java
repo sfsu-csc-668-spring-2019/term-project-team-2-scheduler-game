@@ -110,6 +110,7 @@ public class ProjectBuilder {
      */
     public void buildWorkSessions(Project project) {
         this.taskScheduler.scheduleProject(project);
+        //System.out.println("project well schedule");
     }
 
     public ArrayList<Project> getContext() {

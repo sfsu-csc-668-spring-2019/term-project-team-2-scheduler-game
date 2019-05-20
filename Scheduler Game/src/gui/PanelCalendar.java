@@ -4,35 +4,50 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-public class PanelCalendar extends JPanel implements ActionListener {
+import scheduler.Scheduler;
+import calendar.Project;
+
+public class PanelCalendar extends JPanel implements ActionListener, TemplateComponent {
 
     private PanelDashboard dashboardCalendar;
     private CustomButton[] btnArray = new CustomButton[12];
     private PanelProject[] projectArray = new PanelProject[10];
     private int projectCount;
+    private ArrayList<Project> projects;
+    private Dimension dim;
 
     public PanelCalendar() {
 
-        // @TODO - Replace 3 with a getProjectsCount()
-        projectCount = 3; //PLACEHOLDER
+        // Get all projects
+        projects = Scheduler.getProjects();
+        projectCount = projects.size();
 
-        // @TODO - Delete lines below
-        String[] projects = new String[10]; //PLACEHOLDER
-        projects[0] = "Project 1"; //PLACEHOLDER
-        projects[1] = "Project 2"; //PLACEHOLDER
-        projects[2] = "Project 3"; //PLACEHOLDER
+        // Implements methods from TemplateComponent interface
+        setHelpers();
+        setContent();
+        setContainer();
+        addChild();
+    }
+
+    @Override
+    public void setHelpers() {
+        this.dim = new Dimension();
+    }
+
+    @Override
+    public void setContent() {
 
         // Create the main panels that will have the main content
-        dashboardCalendar = new PanelDashboard("src/images/logo-calendar.png", 12);
-        for(int i=0; i<10; i++) {
-            projectArray[i] = new PanelProject(i);
+        dashboardCalendar = new PanelDashboard("Scheduler Game/src/images/logo-calendar.png", 12);
+        for(int i=0; i<projectCount; i++) {
+            projectArray[i] = new PanelProject(projects.get(i));
         }
 
         // Create the dashboard button for each of the main panels
         for(int i=0; i<projectCount; i++) {
-            btnArray[i] = dashboardCalendar.newDashButton(projects[i]);
+            btnArray[i] = dashboardCalendar.newDashButton(projects.get(i).getName());
             btnArray[i].addActionListener(this);
         }
 
@@ -49,16 +64,19 @@ public class PanelCalendar extends JPanel implements ActionListener {
         // Set dashboard style
         Color dashboardBg = Color.decode("#262A34");
         dashboardCalendar.setBackground(dashboardBg);
+    }
 
-        // Add initial components to FrameMain
-        this.setLayout(new BorderLayout());
-        this.add(dashboardCalendar, BorderLayout.WEST);
-        this.add(projectArray[0], BorderLayout.EAST);
-
-        // Set panel dimensions
-        Dimension dim = new Dimension();
+    @Override
+    public void setContainer() {
         dim.width = 600;
         this.setPreferredSize(dim);
+        this.setLayout(new BorderLayout());
+    }
+
+    @Override
+    public void addChild() {
+        this.add(dashboardCalendar, BorderLayout.WEST);
+        if(projectArray[0] != null) this.add(projectArray[0], BorderLayout.EAST);
     }
 
     @Override
@@ -66,7 +84,7 @@ public class PanelCalendar extends JPanel implements ActionListener {
         JButton clicked = (JButton)e.getSource();
 
         // Reset panels
-        for(int i=0; i<10; i++) {
+        for(int i=0; i<projectCount; i++) {
             this.remove(projectArray[i]);
         }
 

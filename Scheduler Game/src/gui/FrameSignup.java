@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import scheduler.Scheduler;
 
-public class FrameSignup extends JFrame implements ActionListener {
+public class FrameSignup extends JFrame implements ActionListener, TemplateFrame {
 
     private JPanel frameContainer, formPanel, buttonsPanel;
     private CustomImage logoPanel;
@@ -15,18 +15,34 @@ public class FrameSignup extends JFrame implements ActionListener {
     private JPasswordField txtPassword1, txtPassword2;
     private CustomButton btnSignup, btnCancel;
 
+    private Color color;
+    private Dimension dim;
+
     public FrameSignup() {
 
-        // Helpers
-        Dimension dim = new Dimension();
-        Color bgColor = Color.decode("#262a33");
-
         // Logo
-        logoPanel = new CustomImage(new ImageIcon("src/images/logo-login.png").getImage());
+        logoPanel = new CustomImage(new ImageIcon("Scheduler Game/src/images/logo-login.png").getImage());
+
+        // Implements methods from TemplateComponent interface
+        setHelpers();
+        setForm();
+        setButtons();
+        addChildren();
+        setFrame();
+    }
+
+    @Override
+    public void setHelpers() {
+        dim = new Dimension();
+        color = Color.decode("#262a33");
+    }
+
+    @Override
+    public void setForm() {
 
         // Form (Step 1) - Create and populate the panel
         JPanel p = new JPanel(new SpringLayout());
-        p.setBackground(bgColor);
+        p.setBackground(color);
 
         lbUsername = new JLabel("Username: ", JLabel.TRAILING);
         lbUsername.setForeground(Color.WHITE);
@@ -54,24 +70,27 @@ public class FrameSignup extends JFrame implements ActionListener {
 
         // Form (Step 3)  - Add final components
         formPanel = new JPanel(new BorderLayout());
-        formPanel.setBackground(bgColor);
+        formPanel.setBackground(color);
         formPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 42));
         formPanel.add(p);
+    }
 
-        // Buttons
+    @Override
+    public void setButtons() {
+
         buttonsPanel = new JPanel(new GridLayout(3,1));
-        buttonsPanel.setBackground(bgColor);
+        buttonsPanel.setBackground(color);
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 10, 50));
         dim.height = 150;
         buttonsPanel.setPreferredSize(dim);
 
         btnSignup = new CustomButton("SIGN UP", Color.decode("#9d3deb"), Color.decode("#6D0EB5"));
         btnSignup.addActionListener(this);
-        btnSignup.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, bgColor));
+        btnSignup.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, color));
 
         btnCancel = new CustomButton("CANCEL", Color.decode("#434751"), Color.decode("#6D0EB5"));
         btnCancel.addActionListener(this);
-        btnCancel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, bgColor));
+        btnCancel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, color));
 
         lbMessage = new JLabel("", SwingConstants.CENTER);
         lbMessage.setForeground(Color.WHITE);
@@ -79,23 +98,28 @@ public class FrameSignup extends JFrame implements ActionListener {
         buttonsPanel.add(btnSignup);
         buttonsPanel.add(btnCancel);
         buttonsPanel.add(lbMessage);
+    }
 
-        // frameContainer settings
-        frameContainer = new JPanel(new BorderLayout());
-        frameContainer.setBackground(bgColor);
-        frameContainer.add(logoPanel, BorderLayout.NORTH);
-        frameContainer.add(formPanel, BorderLayout.CENTER);
-        frameContainer.add(buttonsPanel, BorderLayout.SOUTH);
-
-        // JFrame
+    @Override
+    public void setFrame() {
         this.setLayout(new BorderLayout());
         this.add(frameContainer, BorderLayout.CENTER);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("Scheduler Sign Up");
         this.setSize(400, 450);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    @Override
+    public void addChildren() {
+        frameContainer = new JPanel(new BorderLayout());
+        frameContainer.setBackground(color);
+        frameContainer.add(logoPanel, BorderLayout.NORTH);
+        frameContainer.add(formPanel, BorderLayout.CENTER);
+        frameContainer.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
     @Override
@@ -117,9 +141,10 @@ public class FrameSignup extends JFrame implements ActionListener {
                 Scheduler.createUser(userName, password1);
                 SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
-                        new FrameLogin("Account successfully created!");
+                        new FrameMain();
                     }
                 });
+                this.dispose();
             }
         }
 

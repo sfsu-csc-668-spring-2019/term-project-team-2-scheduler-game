@@ -83,10 +83,7 @@ public class CustomButton extends JButton implements MouseListener {
         hoverColor = color;
     }
 
-    @Override public void mouseClicked(MouseEvent me) {
-
-    }
-
+    @Override public void mouseClicked(MouseEvent me) {}
     @Override public void mouseReleased(MouseEvent me) {}
     @Override public void mousePressed(MouseEvent me) {}
 

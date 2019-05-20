@@ -1,5 +1,6 @@
 package scheduler;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import gui.PanelProject;
 import org.json.simple.*;
 import java.io.FileReader;
@@ -31,37 +32,26 @@ public class Scheduler extends TimerTask {
     //private User user = new User();
 
     private static DBManager dbManager = new DBManager();
-    private StatsManager statsManager;
-    private Notifier notifier;
-    private UIManager uiManager;
     private static User myuser;
+    private static Scheduler instance;
     private ArrayList<Task> observers = new ArrayList<>();
-
-    private DBManager getDBManager(){
-        return this.dbManager;
-    }
-
-
 
     public Scheduler(){
         System.out.println("RUNNING SCHEDULER");
+        this.instance = this;
         this.status = 0;
-        this.statsManager = new StatsManager();
-        this.notifier = new Notifier();
-        this.uiManager = new UIManager();
-
-
-
-
     }
 
+    private static DBManager getDBManager(){
+        return dbManager;
+    }
 
-    public static void updateProjects(JSONObject projects){
+    public static void updateProjects(JSONArray projects){
         dbManager.updateProject(myuser, projects);
 
     }
 
-    public static JSONObject getProjectFromUser(){
+    public static JSONArray getProjectFromUser(){
         return dbManager.getProject(myuser);
 
     }
@@ -70,23 +60,21 @@ public class Scheduler extends TimerTask {
         myuser = dbManager.createUser(username, password);
     }
 
-    public static int loadUser(String username, String password){
+    public static int loadUser(String username, String password) {
 
 
         User user = dbManager.checkLogin(username, password);
-        if(user != null){
-
-        User user = new User();
-        if(user.checkLogin(username, password) == 0){
-
-            myuser = user;
-
-            return 0;
+        if (user != null) {
+                myuser = user;
+                myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(instance);
+                Scheduler.load();
+                return 0;
         }
-        else {
-            return 1;
-        }
+        return 1;
+    }
 
+    public static void setProjectBuilderScheduler(Scheduler scheduler){
+        myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
     }
 
     public static void createProject(String name, String description, int Hduration, LocalDateTime deadline) {
@@ -147,6 +135,31 @@ public class Scheduler extends TimerTask {
         this.status = 1;
     }
 
+    public static void save(){
+        JSONArray projectList = new JSONArray();
+        for(Project project : Scheduler.myuser.getCalendar().getProjects()){
+            JSONObject jsonProject = project.toJSON();
+            projectList.add(jsonProject);
+        }
+        Scheduler.getDBManager().updateProject(myuser, projectList);
+        System.out.println("Project saved!");
+
+    }
+
+    public static void load(){
+        JSONArray prjJSON = Scheduler.getDBManager().getProject(myuser);
+        Iterator i = prjJSON.iterator();
+
+        while (i.hasNext()) {
+            JSONObject prj = (JSONObject) i.next();
+            Project project = myuser.getCalendar().getProjectBuilder().loadProjectJSON(prj.toJSONString());
+            myuser.getCalendar().addProject(project);
+        }
+    }
+
+    public static User getMyuser() {
+        return myuser;
+    }
 
     public static void main(String[] args) {
 
@@ -166,8 +179,6 @@ public class Scheduler extends TimerTask {
 
 
 
-
-        DBManager dbManager = new DBManager();
         //main scheduler declaration
         //use methods to change the values inside this
 
@@ -178,18 +189,20 @@ public class Scheduler extends TimerTask {
         timer.schedule(scheduler, 0,60000);
 
         // Create test user
-        /*scheduler.loadUser("Hasaan", "123");
-        scheduler.myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
+        //scheduler.loadUser("Hasaan", "123");
+        //scheduler.myuser.getCalendar().getProjectBuilder().getTaskScheduler().setScheduler(scheduler);
+        //scheduler.load();
 
 
         // Create test project
-        scheduler.createProject("Project1", "Finish the scheduler code", 4, LocalDateTime.of(2019, Month.MAY, 28, 00, 00, 00));
-        scheduler.createProject("Project2", "Remember to test everything", 2, LocalDateTime.of(2019, Month.MAY, 20, 00, 00, 00));
-        String jsonTask = scheduler.myuser.getCalendar().getProjects().get(0).toJSON();
-        System.out.println(jsonTask);
+        //scheduler.createProject("Project1", "Finish the scheduler code", 4, LocalDateTime.of(2019, Month.MAY, 28, 00, 00, 00));
+        //scheduler.createProject("Project2", "Remember to test everything", 2, LocalDateTime.of(2019, Month.MAY, 29, 00, 00, 00));
+        //System.out.println(jsonTask);
+
+        //scheduler.save();
 
 
-        scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);*/
+        //scheduler.myuser.getCalendar().getProjectBuilder().loadProjectJSON(jsonTask);
 
         // Starts the GUI
         // Launches the Login frame

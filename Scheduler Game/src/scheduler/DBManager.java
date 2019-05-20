@@ -17,7 +17,7 @@ public class DBManager {
 
     }
 
-    public void updateProject(User user, JSONObject projects){
+    public void updateProject(User user, JSONArray projects){
 
 
         JSONParser parser = new JSONParser();
@@ -53,7 +53,7 @@ public class DBManager {
     }
 
 
-    public JSONObject getProject(User user){
+    public JSONArray getProject(User user){
 
 
         JSONParser parser = new JSONParser();
@@ -68,7 +68,7 @@ public class DBManager {
             if(jsonObject.containsKey(user.getName())){
                 System.out.println(jsonObject.get(user.getName()));
                 JSONObject temp = (JSONObject) jsonObject.get(user.getName());
-                return (JSONObject) temp.get("projects");
+                return (JSONArray) temp.get("projects");
 
 
             }

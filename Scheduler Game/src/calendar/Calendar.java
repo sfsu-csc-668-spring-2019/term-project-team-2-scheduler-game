@@ -22,6 +22,10 @@ public class Calendar {
         this.projects.add(project);
     }
 
+    public void addProject(Project project){
+        this.projects.add(project);
+    }
+
     public Boolean isFree(LocalDateTime time) {
         for(Project project : this.projects) {
             for(Task task : project.getTasks()) {

@@ -77,7 +77,7 @@ public class Project {
         this.tasks = tasks;
     }
 
-    public String toJSON(){
+    public JSONObject toJSON(){
         /*String str = "{";
         str += '"'+ this.id+"\":{";
             str += "\"Name\": "+ this.name + ",";
@@ -106,6 +106,6 @@ public class Project {
         }
         projectDetails.put("Tasks", taskList);
 
-        return projectDetails.toJSONString();
+        return projectDetails;
     }
 }

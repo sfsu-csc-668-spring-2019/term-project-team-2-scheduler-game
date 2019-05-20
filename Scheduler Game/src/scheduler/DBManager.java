@@ -1,7 +1,5 @@
 package scheduler;
 
-import city.City;
-import calendar.Calendar;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,36 +10,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 
-public class User {
-
-    private String name;
-    private String password;
-    private int level;
-    private float experience;
-
-    private City city;
-    private Calendar calendar;
+public class DBManager {
 
 
-    public User(){
-        this.level = 0;
-        this.experience = 0;
+    public void DBManager(){
 
-        this.city = new City();
-        this.calendar = new Calendar();
     }
 
-    public User(String name, String password){
-        this.name = name;
-        this.password = password;
-        this.level = 0;
-        this.experience = 0;
-
-        this.city = new City();
-        this.calendar = new Calendar();
-    }
-
-  /*  public JSONObject getProject(){
+    public void updateProject(User user, JSONObject projects){
 
 
         JSONParser parser = new JSONParser();
@@ -53,40 +29,11 @@ public class User {
 
 
 
-            if(jsonObject.containsKey(this.name)){
-                System.out.println(jsonObject.get(this.name));
-                JSONObject temp = (JSONObject) jsonObject.get(this.name);
-                return (JSONObject) temp.get("projects");
-
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public void updateProject(JSONObject projects){
-
-
-        JSONParser parser = new JSONParser();
-
-        try (Reader reader = new FileReader("database.json")) {
-
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            System.out.println(jsonObject);
-
-
-
-            if(jsonObject.containsKey(this.name)){
-                System.out.println(jsonObject.get(this.name));
-                JSONObject temp = (JSONObject) jsonObject.get(this.name);
+            if(jsonObject.containsKey(user.getName())){
+                System.out.println(jsonObject.get(user.getName()));
+                JSONObject temp = (JSONObject) jsonObject.get(user.getName());
                 temp.put("projects", projects);
-                jsonObject.put(this.name, temp);
+                jsonObject.put(user.getName(), temp);
 
 
                 try (FileWriter file = new FileWriter("database.json", false)) {
@@ -105,9 +52,40 @@ public class User {
 
     }
 
-    public int checkLogin(String username, String password){
+
+    public JSONObject getProject(User user){
 
 
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader("database.json")) {
+
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+            System.out.println(jsonObject);
+
+
+
+            if(jsonObject.containsKey(user.getName())){
+                System.out.println(jsonObject.get(user.getName()));
+                JSONObject temp = (JSONObject) jsonObject.get(user.getName());
+                return (JSONObject) temp.get("projects");
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    public User checkLogin(String username, String password){
+
+        User user = new User();
         JSONParser parser = new JSONParser();
 
         try (Reader reader = new FileReader("database.json")) {
@@ -122,9 +100,9 @@ public class User {
                 JSONObject temp = (JSONObject) jsonObject.get(username);
 
                 if(temp.get("password").equals(password)){
-                    this.name = username;
-                    this.password = password;
-                    return 0;
+                    user.setName(username);
+                    user.setPassword(password);
+                    return user;
                 }
 
             }
@@ -136,13 +114,14 @@ public class User {
         }
 
 
-        return 1;
+        return null;
     }
 
 
-    public void createUser(String username, String password) {
+    public User createUser(String username, String password) {
 
 
+        User user = new User(username, password);
         JSONParser parser = new JSONParser();
 
         try (Reader reader = new FileReader("database.json")) {
@@ -174,39 +153,7 @@ public class User {
             e.printStackTrace();
         }
 
-        this.name = username;
-        this.password = password;
-    }
-*/
-    public String getName() {
-        return this.name;
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
-    }
 }

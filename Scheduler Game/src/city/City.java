@@ -92,8 +92,8 @@ public class City {
             else if (type.equals("Civic")) {
                 buildingType = BuildingFactory.BuildingType.Civic;
             }
-            Building newBuilding = BuildingFactory.Create(buildingType, coord, this.lvl);
-            buildings.add(newBuilding);
+            //Building newBuilding = BuildingFactory.Create(buildingType, coord, this.lvl);
+            //buildings.add(newBuilding);
             updateBuildings();
         //}
     }
@@ -112,5 +112,8 @@ public class City {
 
 
         return cityString.toString();
+    }
+    public void addBuilding(String type, ArrayList<Integer> coord){
+        BuildingFactory.Create(type, coord, lvl);
     }
 }

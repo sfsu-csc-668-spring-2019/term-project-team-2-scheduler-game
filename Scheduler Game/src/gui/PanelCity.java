@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class PanelCity extends JPanel implements ActionListener, TemplateComponent {
 
@@ -14,6 +16,7 @@ public class PanelCity extends JPanel implements ActionListener, TemplateCompone
     private JPanel[] panelArray = new JPanel[12];
     private JPanel cityPanel = new JPanel();
     private JPanel statPanel = new JPanel();
+    private Hashtable<JToggleButton, ArrayList<Integer>> lots = new Hashtable<>();
     private CustomButton[] btnArray = new CustomButton[12];
     private Color color;
     private Dimension dim;
@@ -96,33 +99,67 @@ public class PanelCity extends JPanel implements ActionListener, TemplateCompone
             //addBuilding.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
             addBuilding.setLayout(new BoxLayout(addBuilding, BoxLayout.Y_AXIS));
             cityGrid.setLayout(new GridLayout(areaX, areaY, 10, 10));
-            JPanel lotSelecetion = new JPanel();
+            JPanel lotSelection = new JPanel();
             JLabel lotLabel = new JLabel("No Lot Selected", JLabel.CENTER);
             JPanel purchaseButtonPanel = new JPanel();
-            JButton buildingPurchase = new JButton("No building selected");
-            purchaseButtonPanel.add(buildingPurchase);
+
             String [] buildingTypes = {"Civic", "Residential", "Commercial"};
-            JComboBox buildinsSelection = new JComboBox(buildingTypes);
-            lotSelecetion.add(lotLabel);
-            lotSelecetion.add(buildinsSelection);
-            lotSelecetion.add(purchaseButtonPanel);
-            addBuilding.add(lotSelecetion);
+            JComboBox buildingSelection = new JComboBox(buildingTypes);
+            JButton buildingPurchase = new JButton("Purchase");
+            buildingPurchase.addActionListener(new ActionListener()
+            {
+                public void actionPerformed(ActionEvent ae)
+                {
+                    ArrayList<JToggleButton> keys = new ArrayList<JToggleButton>(lots.keySet());
+                    JToggleButton purchased = null;
+                    for (int k = 0; k < keys.size(); k++){
+                        JToggleButton selectedButton = keys.get(k);
+                        if (selectedButton.isSelected()){
+                            purchased = selectedButton;
+                        }
+                    }
+                    if (purchased == null){
+                        return;
+                    }
+                    String buildingType = (String)buildingSelection.getSelectedItem();
+                    ArrayList<Integer> coord = lots.get(purchased);
+                    purchased.setText(buildingType);
+                    Scheduler.getUserCity().addBuilding(buildingType, coord);
+
+                }
+            });
+            purchaseButtonPanel.add(buildingPurchase);
+            lotSelection.add(lotLabel);
+            lotSelection.add(buildingSelection);
+            lotSelection.add(purchaseButtonPanel);
+            addBuilding.add(lotSelection);
             for (int i = 0; i < areaX; i++)
             {
                 for (int j = 0; j < areaY; j++)
                 {
-                    JButton button = new JButton("Unclaimed");
+                    JToggleButton button = new JToggleButton("Unclaimed");
                     button.setActionCommand("(" + i + ", " + j + ")");
-                /*button.addActionListener(new ActionListener()
+                button.addActionListener(new ActionListener()
                 {
                     public void actionPerformed(ActionEvent ae)
                     {
-                        JButton but = (JButton) ae.getSource();
-                        positionLabel.setText(
-                                but.getActionCommand() + ADDED_TEXT);
+
+                        ArrayList<JToggleButton> keys = new ArrayList<JToggleButton>(lots.keySet());
+                        for (int k = 0; k < keys.size(); k++){
+                            JToggleButton selectedButton = keys.get(k);
+                            if (!selectedButton.equals((JToggleButton)ae.getSource()) && selectedButton.isSelected()){
+                                selectedButton.setSelected(false);
+                            }
+                        }
+                        JToggleButton but = (JToggleButton) ae.getSource();
+                        lotLabel.setText(
+                                "Purchase building at: " + but.getActionCommand());
+
                     }
-                });*/
+                });
                     cityGrid.add(button);
+                    ArrayList<Integer> coord = new ArrayList<Integer>(Arrays.asList(i,j));
+                    lots.put(button, coord);
                 }
             }
             cityPanel.add(addBuilding);
